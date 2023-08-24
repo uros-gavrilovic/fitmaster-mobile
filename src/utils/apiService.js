@@ -5,6 +5,8 @@ const handleErrors = async (error) => {
   throw error;
 };
 
+const domain = "http://localhost:8080";
+
 const apiService = {
   get(url) {
     return axios
@@ -16,7 +18,7 @@ const apiService = {
 
   post(url, body) {
     return axios
-      .post(url, body, {
+      .post(domain + url, body, {
         headers: getHeaders(),
       })
       .catch(handleErrors);

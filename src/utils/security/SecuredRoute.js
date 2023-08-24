@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const Stack = createStackNavigator();
 
 const SecuredRoute = ({ component: Component, ...rest }) => {
-  const token = useSelector((state) => state.userReducer.token);
+  const { token } = useSelector((state) => state.user);
 
   return (
     <Stack.Screen

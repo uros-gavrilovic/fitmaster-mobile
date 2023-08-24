@@ -1,8 +1,9 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Text } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { validateField } from "../../utils/utilFunctions";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import * as userActions from "../../actions/user";
 // import withTranslations from "../../utils/HighOrderComponent";
 
@@ -10,6 +11,14 @@ const Login = (props) => {
   const { t } = props || {};
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const token = useSelector((state) => state.user.token);
+
+  useEffect(() => {
+    if (token !== undefined) {
+      navigation.navigate("dashboard");
+    }
+  }, [token]);
 
   const [inputState, setInputState] = useState({
     username: "",
