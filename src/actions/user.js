@@ -3,6 +3,7 @@ import { appInfoPath, loginMemberPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import { sessionStorageConstants } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
+import createNotification from "../utils/notificationService";
 
 export const fetchAppInfo = () => {
   return (dispatch) => {
@@ -25,11 +26,6 @@ export const login = (data, msg) => {
       .post(loginMemberPath(), data)
       .then((response) => {
         dispatch(userActions.login(response.data));
-        // createNotification(
-        //   notificationType.success,
-        //   msg?.loginTitle,
-        //   msg?.loginSuccessMessage
-        // );
       })
       .catch((err) => {
         handleError(err, userActions, dispatch);

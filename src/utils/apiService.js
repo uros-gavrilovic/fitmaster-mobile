@@ -1,11 +1,10 @@
 import axios from "axios";
 import store from "../reducers/store";
+import { domain } from "../constants/ipconfig";
 
 const handleErrors = async (error) => {
   throw error;
 };
-
-const domain = "http://localhost:8080";
 
 const apiService = {
   get(url) {

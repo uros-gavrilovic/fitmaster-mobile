@@ -5,13 +5,18 @@ import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 
-const SecuredRoute = ({ component: Component, ...rest }) => {
+const SecuredRoute = ({ route }) => {
   const { token } = useSelector((state) => state.user);
+
+  const { securedComponent: SecuredComponent, component: LoginComponent } =
+    route.params;
 
   return (
     <Stack.Screen
-      {...rest}
-      component={(props) => (token ? <Component {...props} /> : <Login />)}
+      name="dashboard"
+      component={(props) =>
+        token ? <SecuredComponent {...props} /> : <LoginComponent {...props} />
+      }
     />
   );
 };

@@ -1,7 +1,7 @@
 export function handleError(error, actions, dispatch) {
   // Creates notification and dispatches error action.
 
-  console.log(error);
+  console.log(JSON.stringify(error));
 
   //   const messages = error.response.data;
   //   dispatch(actions.actionError(error?.response?.data));
