@@ -11,14 +11,18 @@
   "dependencies": {
     "@expo/webpack-config": "18.0.0",
     "@react-native-material/core": "^1.3.7",
+    "@react-navigation/stack": "^6.3.17",
     "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
     "expo": "~49.0.8",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.3",
+    "react-native-paper": "^5.10.3",
     "react-native-web": "~0.19.6",
-    "react-redux": "^8.1.2"
+    "react-redux": "^8.1.2",
+    "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
