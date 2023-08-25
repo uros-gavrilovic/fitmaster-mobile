@@ -3,7 +3,7 @@ import { appInfoPath, loginMemberPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import { sessionStorageConstants } from "../constants/globals";
 import { handleError } from "../utils/utilFunctions";
-import createNotification from "../utils/notificationService";
+import createNotification from "../utils/NotificationService";
 
 export const fetchAppInfo = () => {
   return (dispatch) => {
