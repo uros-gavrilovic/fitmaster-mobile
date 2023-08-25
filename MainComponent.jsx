@@ -1,16 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/components/login/Login";
-import SecuredRoute from "./src/utils/security/SecuredRoute";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAppInfo } from "./src/actions/user";
-import { useEffect } from "react";
-import Dashboard from "./src/components/app/dashboard/Dashboard";
+import { useSelector } from "react-redux";
+import Home from "./src/components/reusable/menu/CustomNavigator";
 
 const Stack = createStackNavigator();
 
 export default function MainComponent() {
-  const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
 
   return (
@@ -19,8 +15,7 @@ export default function MainComponent() {
         {!token ? (
           <Stack.Screen name="login" component={Login} />
         ) : (
-          // whatever screens if user is logged in
-          <Stack.Screen name="dashboard" component={Dashboard} />
+          <Stack.Screen name="authorized" component={Home} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

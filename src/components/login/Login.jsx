@@ -18,7 +18,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (token !== undefined) {
-      navigation.navigate("dashboard");
+      navigation.navigate("authorized");
     }
   }, [token]);
 

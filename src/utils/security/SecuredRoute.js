@@ -13,7 +13,7 @@ const SecuredRoute = ({ route }) => {
 
   return (
     <Stack.Screen
-      name="dashboard"
+      name="home"
       component={(props) =>
         token ? <SecuredComponent {...props} /> : <LoginComponent {...props} />
       }

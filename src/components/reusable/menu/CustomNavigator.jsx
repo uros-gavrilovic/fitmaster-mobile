@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { CommonActions } from "@react-navigation/native";
+import Scheduler from "../../app/scheduler/Scheduler";
+import Settings from "../../app/settings/Settings";
+import Home from "../../app/home/Home";
+import CustomConfirmModal from "../modals/CustomConfirmModal";
 
 const Tab = createBottomTabNavigator();
 
-export default function CustomBottomNavigator() {
+export default function CustomBottomNavigator(props) {
+  const { t } = props || {};
+
+  // const [openLogoutModal, setOpenLogoutModal] = useState(false);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -56,8 +64,8 @@ export default function CustomBottomNavigator() {
       )}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="home"
+        component={Home}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => {
@@ -66,8 +74,8 @@ export default function CustomBottomNavigator() {
         }}
       />
       <Tab.Screen
-        name="Scheduler"
-        component={HomeScreen}
+        name="scheduler"
+        component={Scheduler}
         options={{
           tabBarLabel: "Scheduler",
           tabBarIcon: ({ color, size }) => {
@@ -76,8 +84,8 @@ export default function CustomBottomNavigator() {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="settings"
+        component={Settings}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color, size }) => {
@@ -86,39 +94,38 @@ export default function CustomBottomNavigator() {
         }}
       />
       <Tab.Screen
-        name="Log Out"
-        component={SettingsScreen}
+        name="logout"
+        component={() => {
+          return null;
+        }}
         options={{
           tabBarLabel: "Log Out",
           tabBarIcon: ({ color, size }) => {
             return <Icon name="logout" size={size} color={color} />;
           },
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            console.log("Log out");
+            e.preventDefault(); // Prevent default action
+
+            // Open the logout modal
+            // setOpenLogoutModal(true);
+          },
+        })}
       />
     </Tab.Navigator>
-  );
-}
-
-function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium">Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium">Settings!</Text>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  },
+  bottomNavigationBar: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
