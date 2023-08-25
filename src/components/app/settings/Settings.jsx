@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
+import CustomAppBar from "../../reusable/menu/CustomAppBar";
 
 export default function Settings() {
   return (
-    <View style={styles.container}>
+    <View>
+      <CustomAppBar />
+
       <Text variant="headlineMedium">Settings!</Text>
     </View>
   );

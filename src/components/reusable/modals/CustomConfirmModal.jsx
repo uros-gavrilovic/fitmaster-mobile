@@ -3,6 +3,8 @@ import { Modal, StyleSheet, Pressable, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 export default function CustomConfirmModal(props) {
+  // DEPRECATED: Use CustomConfirmDialog instead.
+
   const { title, message, yes_action, no_action, open, setOpen, t } =
     props || {};
 

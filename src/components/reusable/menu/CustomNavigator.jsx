@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, BottomNavigation } from "react-native-paper";
@@ -8,11 +8,21 @@ import Scheduler from "../../app/scheduler/Scheduler";
 import Settings from "../../app/settings/Settings";
 import Home from "../../app/home/Home";
 import CustomConfirmModal from "../modals/CustomConfirmModal";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Tab = createBottomTabNavigator();
 
 export default function CustomBottomNavigator(props) {
   const { t } = props || {};
+
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (!user) {
+      console.log("ovde");
+      navigate("/login");
+    }
+  }, [user]);
 
   // const [openLogoutModal, setOpenLogoutModal] = useState(false);
 
@@ -95,9 +105,6 @@ export default function CustomBottomNavigator(props) {
       />
       <Tab.Screen
         name="logout"
-        component={() => {
-          return null;
-        }}
         options={{
           tabBarLabel: "Log Out",
           tabBarIcon: ({ color, size }) => {
@@ -106,14 +113,15 @@ export default function CustomBottomNavigator(props) {
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
-            console.log("Log out");
-            e.preventDefault(); // Prevent default action
-
-            // Open the logout modal
+            e.preventDefault();
             // setOpenLogoutModal(true);
           },
         })}
-      />
+      >
+        {() => {
+          return null;
+        }}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

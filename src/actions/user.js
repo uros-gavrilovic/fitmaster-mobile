@@ -33,26 +33,26 @@ export const login = (data, msg) => {
   };
 };
 
-// export const logout = (data, msg) => {
-//   return (dispatch) => {
-//     dispatch(userActions.actionStart());
-//     // return apiService
-//     //   .post(logoutTrainerPath(), data) // TODO: Implement log-out method on back-end.
-//     //   .then(() => {
-//     dispatch(userActions.logout());
-//     // })
-//     // .then(() => {
-//     createNotification(
-//       notificationType.success,
-//       msg?.logoutTitle,
-//       msg?.logoutSuccessMessage
-//     );
-//     // })
-//     // .catch((err) => {
-//     //   handleError(err, userActions, dispatch, undefined);
-//     // });
-//   };
-// };
+export const logout = (data, msg) => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    // return apiService
+    //   .post(logoutTrainerPath(), data) // TODO: Implement log-out method on back-end.
+    //   .then(() => {
+    dispatch(userActions.logout());
+    // })
+    // .then(() => {
+    // createNotification(
+    //   notificationType.success,
+    //   msg?.logoutTitle,
+    //   msg?.logoutSuccessMessage
+    // );
+    // })
+    // .catch((err) => {
+    //   handleError(err, userActions, dispatch, undefined);
+    // });
+  };
+};
 
 // export const changePassword = (data, messages) => {
 //   return (dispatch) => {

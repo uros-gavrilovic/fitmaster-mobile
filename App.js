@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux"; // Rename ReduxProvider
 import store from "./src/reducers/store";
 import MainComponent from "./MainComponent";
+import { Provider as PaperProvider } from "react-native-paper"; // Rename PaperProvider
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <MainComponent />
-    </Provider>
+    <ReduxProvider store={store}>
+      <PaperProvider>
+        <MainComponent />
+      </PaperProvider>
+    </ReduxProvider>
   );
 }
 
