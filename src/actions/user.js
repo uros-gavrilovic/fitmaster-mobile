@@ -1,8 +1,11 @@
 import apiService from "../utils/apiService";
 import { appInfoPath, loginMemberPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
-import { sessionStorageConstants } from "../constants/globals";
-import { handleError } from "../utils/utilFunctions";
+import {
+  notificationType,
+  sessionStorageConstants,
+} from "../constants/globals";
+import { createNotification, handleError } from "../utils/utilFunctions";
 
 export const fetchAppInfo = () => {
   return (dispatch) => {
@@ -44,11 +47,10 @@ export const logout = (data, msg) => {
     dispatch(userActions.logout());
     // })
     // .then(() => {
-    // createNotification(
-    //   notificationType.success,
-    //   msg?.logoutTitle,
-    //   msg?.logoutSuccessMessage
-    // );
+    createNotification(
+      notificationType.success,
+      "You have been logged out successfully!"
+    );
     // })
     // .catch((err) => {
     //   handleError(err, userActions, dispatch, undefined);

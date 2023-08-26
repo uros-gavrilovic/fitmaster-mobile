@@ -8,18 +8,13 @@ import Scheduler from "../../app/scheduler/Scheduler";
 import Settings from "../../app/settings/Settings";
 import Home from "../../app/home/Home";
 import { useSelector } from "react-redux";
+import { useNavigate, useNavigation } from "react-router-dom";
+import Workout from "../../app/workout/Workout";
 
 const Tab = createBottomTabNavigator();
 
 export default function CustomBottomNavigator(props) {
   const { t } = props || {};
-
-  const { user } = useSelector((state) => state.user);
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user]);
 
   return (
     <Tab.Navigator
@@ -89,6 +84,16 @@ export default function CustomBottomNavigator(props) {
         }}
       />
       <Tab.Screen
+        name="add-workout"
+        component={Workout}
+        options={{
+          tabBarLabel: "Start Workout",
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="plus-circle" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
         name="settings"
         component={Settings}
         options={{
@@ -98,25 +103,6 @@ export default function CustomBottomNavigator(props) {
           },
         }}
       />
-      <Tab.Screen
-        name="logout"
-        options={{
-          tabBarLabel: "Log Out",
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="logout" size={size} color={color} />;
-          },
-        }}
-        listeners={({ navigation }) => ({
-          tabPress: (e) => {
-            e.preventDefault();
-            // setOpenLogoutModal(true);
-          },
-        })}
-      >
-        {() => {
-          return null;
-        }}
-      </Tab.Screen>
     </Tab.Navigator>
   );
 }

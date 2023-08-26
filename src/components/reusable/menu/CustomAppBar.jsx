@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Appbar, Avatar, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import CustomConfirmDialog from "../modals/CustomConfirmDialog";
@@ -27,7 +27,7 @@ export default function CustomAppBar() {
       <Appbar.Content title="FitMaster" />
       <Avatar.Text
         size={24}
-        label={user.firstName[0] + user.lastName[0]}
+        label={user?.firstName[0] + user?.lastName[0]}
         onTouchEnd={() => {
           setOpenModal(true);
         }}
