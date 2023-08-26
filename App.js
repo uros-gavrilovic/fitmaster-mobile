@@ -1,15 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Provider as ReduxProvider } from "react-redux"; // Rename ReduxProvider
+import { Provider as ReduxProvider } from "react-redux";
 import store from "./src/reducers/store";
 import MainComponent from "./MainComponent";
-import { Provider as PaperProvider } from "react-native-paper"; // Rename PaperProvider
+import { Provider as PaperProvider } from "react-native-paper";
+import { ToastProvider } from "react-native-toast-notifications";
+import Toast from "react-native-toast-notifications";
 
 export default function App() {
   return (
     <ReduxProvider store={store}>
       <PaperProvider>
-        <MainComponent />
+        <ToastProvider>
+          <MainComponent />
+        </ToastProvider>
       </PaperProvider>
+      <Toast ref={(ref) => (global["toast"] = ref)} />
     </ReduxProvider>
   );
 }

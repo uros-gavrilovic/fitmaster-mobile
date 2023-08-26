@@ -10,21 +10,7 @@ export default function Home() {
   return (
     <View>
       <CustomAppBar />
-      <CustomSnackbar
-        message={"Test Notification"}
-        icon="camera"
-        duration={3000} // 3 seconds
-        open={open}
-        setOpen={setOpen}
-      />
 
-      <Button
-        onPress={() => {
-          setOpen(true);
-        }}
-      >
-        CLICK ME
-      </Button>
       <Text variant="headlineMedium">Home!</Text>
     </View>
   );

@@ -7,9 +7,7 @@ import { CommonActions } from "@react-navigation/native";
 import Scheduler from "../../app/scheduler/Scheduler";
 import Settings from "../../app/settings/Settings";
 import Home from "../../app/home/Home";
-import CustomConfirmModal from "../modals/CustomConfirmModal";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,12 +17,9 @@ export default function CustomBottomNavigator(props) {
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
     if (!user) {
-      console.log("ovde");
       navigate("/login");
     }
   }, [user]);
-
-  // const [openLogoutModal, setOpenLogoutModal] = useState(false);
 
   return (
     <Tab.Navigator
