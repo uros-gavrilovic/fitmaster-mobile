@@ -3,12 +3,20 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/components/login/Login";
 import { useSelector } from "react-redux";
 import Home from "./src/components/reusable/menu/CustomNavigator";
-import CustomAppBar from "./src/components/reusable/menu/CustomAppBar";
+import { fetchAppInfo } from "./src/actions/user";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const Stack = createStackNavigator();
 
 export default function MainComponent() {
   const token = useSelector((state) => state.user.token);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAppInfo());
+  }, []);
 
   return (
     <NavigationContainer>

@@ -3,6 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: undefined,
   token: undefined,
+  appInfo: {
+    appName: "fitmaster",
+    appVersion: "1.0",
+    appLocale: "en",
+  },
 
   loading: false,
   error: undefined,
@@ -32,6 +37,9 @@ const userSlice = createSlice({
 
       state.error = undefined;
       state.loading = false;
+    },
+    setAppInfo(state, action) {
+      state.appInfo = action.payload;
     },
 
     actionStart(state) {

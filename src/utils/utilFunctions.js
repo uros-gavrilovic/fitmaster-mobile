@@ -1,10 +1,11 @@
+import { useSelector } from "react-redux";
 import { notificationType } from "../constants/globals";
 
 export function handleError(error, actions, dispatch) {
   // Creates notification and dispatches error action.
 
-  console.log(JSON.stringify(error));
-  createNotification(notificationType.error, "Error has occured!");
+  const messages = error.response.data;
+  createNotification(notificationType.error, messages?.message);
 }
 
 export function createNotification(type, message, duration = 3000) {
@@ -17,15 +18,6 @@ export function createNotification(type, message, duration = 3000) {
     offset: 3000,
     animationType: "slide-in",
   });
-}
-
-export function getTranslationFile() {
-  // Returns translation file name
-
-  const appName = sessionStorage.getItem("appName") || appInfo.name;
-  const language =
-    sessionStorage.getItem("appLocale") || appInfo.default_locale;
-  return `${appName}_${language}`;
 }
 
 export function validateField(field, fieldName, setErrorState) {

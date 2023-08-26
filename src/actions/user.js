@@ -1,10 +1,7 @@
 import apiService from "../utils/apiService";
 import { appInfoPath, loginMemberPath } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
-import {
-  notificationType,
-  sessionStorageConstants,
-} from "../constants/globals";
+import { notificationType } from "../constants/globals";
 import { createNotification, handleError } from "../utils/utilFunctions";
 
 export const fetchAppInfo = () => {
@@ -13,7 +10,7 @@ export const fetchAppInfo = () => {
     return apiService
       .get(appInfoPath())
       .then((response) => {
-        setAppInfo(response.data, dispatch);
+        dispatch(userActions.setAppInfo(response.data));
       })
       .catch((err) => {
         handleError(err, userActions, dispatch);
@@ -30,7 +27,7 @@ export const login = (data, msg) => {
         dispatch(userActions.login(response.data));
       })
       .then(() => {
-        createNotification(notificationType.success, "Welcome back!");
+        createNotification(notificationType.success, msg?.login_success);
       })
       .catch((err) => {
         handleError(err, userActions, dispatch);
@@ -78,9 +75,3 @@ export const logout = (data, msg) => {
 //       });
 //   };
 // };
-
-function setAppInfo(data, dispatch) {
-  sessionStorage.setItem(sessionStorageConstants.APP_NAME, data?.appName);
-  sessionStorage.setItem(sessionStorageConstants.APP_VERSION, data?.appVersion);
-  sessionStorage.setItem(sessionStorageConstants.LOCALE, data?.appLocale);
-}

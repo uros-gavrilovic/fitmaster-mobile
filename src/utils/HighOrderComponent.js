@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import hoistStatics from "hoist-non-react-statics";
-import { useSelector, useDispatch } from "react-redux";
+import { isEmpty } from "lodash";
 import { translationsActions } from "../reducers/translations";
-import { getTranslationFile } from "./utilFunctions";
+import { useDispatch, useSelector } from "react-redux";
+import { loadTranslation } from "../constants/translations/translationHelper";
+import { getTranslationFile } from "../utils/utilFunctions";
 
 // A public higher-order component to access translations
 let initStart = true;
@@ -14,35 +16,24 @@ const withTranslations = (SourceComponent, ComponentName) => {
 
   function TranslatableComponent(props) {
     const dispatch = useDispatch();
-    const { translations } = useSelector((state) => state.translationsReducer);
-    const [loadedTranslations, setLoadedTranslations] = useState(false);
+    const { translations } = useSelector((state) => state.translations);
+    const { appName, appLocale } = useSelector((state) => state.user.appInfo);
+
+    const translationImportHandler = useCallback(async () => {
+      const translation = loadTranslation(`${appName}_${appLocale}`);
+
+      if (translation) {
+        dispatch(translationsActions.setTranslations(translation));
+      }
+    }, [dispatch]);
 
     useEffect(() => {
       if (initStart) {
         initStart = false;
-        if (!translations) {
-          loadTranslations(); // Load translations if they haven't been loaded yet
-        }
+        isEmpty(translations) && translationImportHandler();
+        return;
       }
-    }, [loadTranslations, translations]);
-
-    const loadTranslations = async () => {
-      try {
-        const fileName = getTranslationFile();
-        const { translation } = await import(
-          `../constants/translations/${fileName}`
-        );
-        dispatch(translationsActions.setTranslations(translation));
-        setLoadedTranslations(true);
-      } catch (error) {
-        console.error("Error loading translations:", error);
-      }
-    };
-
-    if (!loadedTranslations) {
-      // Loading indicator
-      return null;
-    }
+    }, [translationImportHandler, translations]);
 
     return <SourceComponent t={translations[ComponentName]} {...props} />;
   }

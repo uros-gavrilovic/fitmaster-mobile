@@ -9,7 +9,7 @@ const handleErrors = async (error) => {
 const apiService = {
   get(url) {
     return axios
-      .get(url, {
+      .get(domain + url, {
         headers: getHeaders(),
       })
       .catch(handleErrors);

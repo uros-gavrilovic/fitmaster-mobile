@@ -6,16 +6,15 @@ import { useNavigation } from "@react-navigation/native";
 import * as userActions from "../../actions/user";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
-import { ScrollView, View } from "react-native";
-import { useToast } from "react-native-toast-notifications";
+import { View } from "react-native";
+import withTranslations from "../../utils/HighOrderComponent";
 
 const Login = (props) => {
   const { t } = props || {};
 
-  const toast = useToast();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { token, user } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.user);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   useEffect(() => {
@@ -96,7 +95,7 @@ const Login = (props) => {
         </Text>
       </View>
       <TextInput
-        label="Username"
+        label={t?.fields?.username}
         mode="outlined"
         error={errorState.username}
         value={inputState.username}
@@ -106,7 +105,7 @@ const Login = (props) => {
         style={{ margin: 20 }}
       />
       <TextInput
-        label="Password"
+        label={t?.fields?.password}
         mode="outlined"
         value={inputState.password}
         onChangeText={(text) =>
@@ -127,7 +126,7 @@ const Login = (props) => {
         onPress={handleLogin}
         style={{ marginTop: 15, width: "90%", alignSelf: "center" }}
       >
-        Sign In
+        {t?.buttons?.login}
       </Button>
       <Button
         icon="account-plus"
@@ -135,10 +134,10 @@ const Login = (props) => {
         onPress={handleLogin}
         style={{ marginTop: 15, width: "90%", alignSelf: "center" }}
       >
-        Register
+        {t?.buttons?.register}
       </Button>
     </View>
   );
 };
 
-export default Login;
+export default withTranslations(Login);

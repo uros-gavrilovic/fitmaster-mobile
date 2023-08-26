@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, BottomNavigation } from "react-native-paper";
+import { BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { CommonActions } from "@react-navigation/native";
 import Scheduler from "../../app/scheduler/Scheduler";
 import Settings from "../../app/settings/Settings";
 import Home from "../../app/home/Home";
-import { useSelector } from "react-redux";
-import { useNavigate, useNavigation } from "react-router-dom";
 import Workout from "../../app/workout/Workout";
+import withTranslations from "../../../utils/HighOrderComponent";
 
 const Tab = createBottomTabNavigator();
 
-export default function CustomBottomNavigator(props) {
+const CustomNavigator = (props) => {
   const { t } = props || {};
 
   return (
@@ -67,7 +65,7 @@ export default function CustomBottomNavigator(props) {
         name="home"
         component={Home}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: t?.tabs?.home,
           tabBarIcon: ({ color, size }) => {
             return <Icon name="home" size={size} color={color} />;
           },
@@ -77,17 +75,17 @@ export default function CustomBottomNavigator(props) {
         name="scheduler"
         component={Scheduler}
         options={{
-          tabBarLabel: "Scheduler",
+          tabBarLabel: t?.tabs?.scheduler,
           tabBarIcon: ({ color, size }) => {
             return <Icon name="calendar" size={size} color={color} />;
           },
         }}
       />
       <Tab.Screen
-        name="add-workout"
+        name="start-workout"
         component={Workout}
         options={{
-          tabBarLabel: "Start Workout",
+          tabBarLabel: t?.tabs?.start_workout,
           tabBarIcon: ({ color, size }) => {
             return <Icon name="plus-circle" size={size} color={color} />;
           },
@@ -97,7 +95,7 @@ export default function CustomBottomNavigator(props) {
         name="settings"
         component={Settings}
         options={{
-          tabBarLabel: "Settings",
+          tabBarLabel: t?.tabs?.settings,
           tabBarIcon: ({ color, size }) => {
             return <Icon name="cog" size={size} color={color} />;
           },
@@ -105,7 +103,7 @@ export default function CustomBottomNavigator(props) {
       />
     </Tab.Navigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -118,3 +116,5 @@ const styles = StyleSheet.create({
     right: 0,
   },
 });
+
+export default withTranslations(CustomNavigator);
