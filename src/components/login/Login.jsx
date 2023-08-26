@@ -78,7 +78,21 @@ const Login = (props) => {
         <Text style={{ fontSize: 30 }}>
           <Text>Fit</Text>
           <Text style={{ fontStyle: "italic" }}>Master</Text>
-          <Text style={{ fontSize: 20, baseline: 10 }}>Mobile</Text>
+          <View>
+            <Text
+              style={{
+                marginTop: 10,
+                marginLeft: 10,
+                padding: 5,
+                color: "white",
+                fontSize: 15,
+                backgroundColor: DefaultTheme.colors.primary,
+                borderRadius: 8,
+              }}
+            >
+              Mobile
+            </Text>
+          </View>
         </Text>
       </View>
       <TextInput
