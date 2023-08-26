@@ -26,6 +26,7 @@ export const filtersPath = () => exerciseAPI + `/filters`;
 const planAPI = `/api/plan`;
 export const plansPath = () => planAPI;
 export const plansTrainerIDPath = (id) => planAPI + `/trainer/${id}`;
+export const plansMemberIDPath = (id) => planAPI + `/member/${id}`;
 export const plansIDPath = (id) => planAPI + `/${id}`;
 
 // Packages

@@ -41,11 +41,11 @@ const apiService = {
 };
 
 function getHeaders() {
-  const jwtToken = store.getState().user.jwtToken;
+  const token = store.getState().user.token;
 
   const headers = {
     "Content-Type": "application/json",
-    ...(jwtToken !== undefined ? { Authorization: `Bearer ${jwtToken}` } : {}),
+    ...(token !== undefined ? { Authorization: `Bearer ${token}` } : {}),
   };
 
   return headers;

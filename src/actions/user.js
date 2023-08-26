@@ -24,7 +24,7 @@ export const login = (data, msg) => {
     return apiService
       .post(loginMemberPath(), data)
       .then((response) => {
-        dispatch(userActions.login(response.data));
+        dispatch(userActions.login(response?.data));
       })
       .then(() => {
         createNotification(notificationType.success, msg?.login_success);
