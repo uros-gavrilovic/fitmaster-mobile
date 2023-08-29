@@ -60,6 +60,10 @@ const Login = (props) => {
     );
   };
 
+  const handleRegister = () => {
+    navigation.navigate("Registration");
+  };
+
   return (
     <View
       style={{
@@ -131,7 +135,7 @@ const Login = (props) => {
       <Button
         icon="account-plus"
         mode="contained"
-        onPress={handleLogin}
+        onPress={handleRegister}
         style={{ marginTop: 15, width: "90%", alignSelf: "center" }}
       >
         {t?.buttons?.register}

@@ -6,6 +6,7 @@ import Home from "./src/components/reusable/menu/CustomNavigator";
 import { fetchAppInfo } from "./src/actions/user";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import Registration from "./src/components/registration/Registration";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,7 @@ export default function MainComponent() {
             }}
           />
         )}
+        <Stack.Screen name="Registration" component={Registration} />
       </Stack.Navigator>
     </NavigationContainer>
   );
