@@ -1,5 +1,9 @@
 import apiService from "../utils/apiService";
-import { appInfoPath, loginMemberPath } from "../constants/apiEndpoints";
+import {
+  appInfoPath,
+  loginMemberPath,
+  registerMemberPath,
+} from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import { notificationType } from "../constants/globals";
 import { createNotification, handleError } from "../utils/utilFunctions";
@@ -52,6 +56,26 @@ export const logout = (data, msg) => {
     // .catch((err) => {
     //   handleError(err, userActions, dispatch, undefined);
     // });
+  };
+};
+
+export const register = (data, msg) => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    return apiService
+      .post(registerMemberPath(), data)
+      .then((response) => {
+        dispatch(userActions.login(response?.data));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          "Successfull registration"
+        );
+      })
+      .catch((err) => {
+        handleError(err, userActions, dispatch);
+      });
   };
 };
 
