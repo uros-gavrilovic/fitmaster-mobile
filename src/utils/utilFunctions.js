@@ -27,3 +27,23 @@ export function validateField(field, fieldName, setErrorState) {
   setErrorState((prevState) => ({ ...prevState, [fieldName]: error }));
   return error;
 }
+
+export function formatDate(backEndDate) {
+  // Formats date received from back-end from format [YYYY, MM, DD, HH, MM] to the one applicable for Date JS class.
+
+  return new Date(
+    Date.UTC(
+      backEndDate[0], // Year
+      backEndDate[1] - 1, // Month (0-based)
+      backEndDate[2], // Day
+      backEndDate[3], // Hour
+      backEndDate[4] // Minute
+    )
+  );
+}
+
+export function formatISOStringDate(date) {
+  // Formats date received from back-end from format [YYYY, MM, DD, HH, MM] to the one applicable for Date JS class.
+
+  return new Date(date).toISOString();
+}

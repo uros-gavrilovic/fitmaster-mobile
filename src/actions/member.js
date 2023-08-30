@@ -1,19 +1,22 @@
 import apiService from "../utils/apiService";
 import { plansMemberIDPath } from "../constants/apiEndpoints";
 import { memberActions } from "../reducers/member";
-import { handleError } from "../utils/utilFunctions";
-import { userActions } from "../reducers/user";
+import { formatDate, handleError } from "../utils/utilFunctions";
 
 export const fetchPlans = (id) => {
   return (dispatch) => {
-    dispatch(userActions.actionStart());
+    dispatch(memberActions.actionStart());
     return apiService
       .get(plansMemberIDPath(id))
       .then((response) => {
-        dispatch(memberActions.fetchPlans(response?.data));
+        const formattedData = response?.data.map((plan) => ({
+          title: `${plan.trainer.firstName} ${plan.trainer.lastName}`,
+          start: formatDate(plan.startsAt).toISOString(),
+          end: formatDate(plan.endsAt).toISOString(),
+        }));
+        dispatch(memberActions.fetchPlans(formattedData));
       })
       .catch((err) => {
-        console.log(err);
         handleError(err, memberActions, dispatch);
       });
   };

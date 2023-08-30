@@ -12,8 +12,8 @@ const memberSlice = createSlice({
   initialState: initialState,
 
   reducers: {
-    fetchPlans(state) {
-      state.plans = undefined;
+    fetchPlans(state, action) {
+      state.plans = action.payload;
 
       state.error = undefined;
       state.loading = false;
