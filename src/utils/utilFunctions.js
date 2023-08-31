@@ -42,6 +42,29 @@ export function formatDate(backEndDate) {
   );
 }
 
+export function capitalizeFirstLetter(str, capitalizeEachWord = false) {
+  if (typeof str !== "string" || str.length === 0) {
+    return str;
+  }
+
+  if (capitalizeEachWord) {
+    return str
+      .split(" ")
+      .map((word) => capitalizeFirstLetter(word))
+      .join(" ");
+  } else {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+}
+
+export function removeUnderscores(str) {
+  if (typeof str !== "string" || str.length === 0) {
+    return str;
+  }
+
+  return str.split("_").join(" ");
+}
+
 export function formatISOStringDate(date) {
   // Formats date received from back-end from format [YYYY, MM, DD, HH, MM] to the one applicable for Date JS class.
 
