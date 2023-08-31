@@ -34,10 +34,20 @@ const MyComponent = (props) => {
             flexDirection: "row",
           }}
         >
-          <Button mode="outlined" style={{ flex: 1 }} onPress={handleNo}>
+          <Button
+            mode="outlined"
+            style={{ flex: 1 }}
+            onPress={handleNo}
+            icon="thumb-down"
+          >
             No
           </Button>
-          <Button mode="contained" style={{ flex: 1 }} onPress={handleYes}>
+          <Button
+            mode="contained"
+            style={{ flex: 1 }}
+            onPress={handleYes}
+            icon="thumb-up"
+          >
             Yes
           </Button>
         </Dialog.Actions>

@@ -8,7 +8,7 @@ const CustomDialog = (props) => {
   return (
     <Portal>
       <Dialog
-        style={{ borderRadius: 0, padding: 20 }}
+        style={{ borderRadius: 10 }}
         visible={open}
         onDismiss={() => {
           setOpen(false);

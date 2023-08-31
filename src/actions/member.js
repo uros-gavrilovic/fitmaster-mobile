@@ -31,7 +31,13 @@ export const fetchPlan = (planID) => {
     return apiService
       .get(plansIDPath(planID))
       .then((response) => {
-        dispatch(memberActions.fetchPlan(response.data));
+        const formattedData = {
+          ...response.data,
+          startsAt: formatDate(response.data.startsAt).toISOString(),
+          endsAt: formatDate(response.data.endsAt).toISOString(),
+        };
+
+        dispatch(memberActions.fetchPlan(formattedData));
       })
       .catch((err) => {
         handleError(err, memberActions, dispatch);

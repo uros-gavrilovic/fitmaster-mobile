@@ -22,4 +22,28 @@ export const translation = {
       settings: "Settings",
     },
   },
+
+  Scheduler: {},
+
+  PlanDetails: {
+    fields: {
+      time: "Time",
+      exercises: "Exercises",
+      unassigned_trainer: "Unassigned",
+      trainer: "Trainer",
+      sets: "sets",
+      reps: "reps",
+      instructions: "Instructions",
+      yes: "Yes",
+      no: "No",
+    },
+    buttons: {
+      cancel_workout: "Abort",
+      start_workout: "Start Workout",
+    },
+    messages: {
+      cancel_workout_title: "Abort Workout",
+      cancel_workout_message: "Are you sure you want to abort this workout?",
+    },
+  },
 };
