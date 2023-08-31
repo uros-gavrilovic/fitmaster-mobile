@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 import { View } from "react-native";
 import withTranslations from "../../utils/HighOrderComponent";
+import * as Animatable from "react-native-animatable";
 
 const Login = (props) => {
   const { t } = props || {};
@@ -24,8 +25,8 @@ const Login = (props) => {
   }, [token]);
 
   const [inputState, setInputState] = useState({
-    username: "test",
-    password: "test",
+    username: "member", // Testing purposes only.
+    password: "member", // Testing purposes only.
   });
   const [errorState, setErrorState] = useState({
     username: false,
@@ -77,7 +78,13 @@ const Login = (props) => {
           alignItems: "center",
         }}
       >
-        <FontAwesomeIcon icon={faDumbbell} size={200} beat />
+        <Animatable.View
+          animation="pulse"
+          easing="ease-out"
+          iterationCount="infinite"
+        >
+          <FontAwesomeIcon icon={faDumbbell} size={200} />
+        </Animatable.View>
         <Text style={{ fontSize: 30 }}>
           <Text>Fit</Text>
           <Text style={{ fontStyle: "italic" }}>Master</Text>

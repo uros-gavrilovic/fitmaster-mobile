@@ -6,14 +6,28 @@ import { useDispatch, useSelector } from "react-redux";
 import * as memberActions from "../../../actions/member";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import Loading from "../../reusable/other/Loading";
+import CustomDialog from "../../reusable/modals/CustomDialog";
+import PlanDetails from "./PlanDetails";
 
 export default function Scheduler() {
   const isMount = useIsMount();
   const dispatch = useDispatch();
 
   const [plansState, setPlansState] = useState([]);
-  const { plans } = useSelector((state) => state.member);
+  const { plans, selectedPlan } = useSelector((state) => state.member);
   const { user, loading } = useSelector((state) => state.user);
+  const [selectedEventState, setSelectedEventState] = useState({});
+  const [eventModalVisible, setEventModalVisible] = useState(false);
+
+  const handleEventPress = (event) => {
+    dispatch(memberActions.fetchPlan(event.id));
+  };
+  useEffect(() => {
+    if (selectedPlan) {
+      setSelectedEventState(selectedPlan);
+      setEventModalVisible(true);
+    }
+  }, [selectedPlan]);
 
   if (isMount) dispatch(memberActions.fetchPlans(user?.memberID));
   useEffect(() => {
@@ -31,12 +45,17 @@ export default function Scheduler() {
   return (
     <View>
       <CustomAppBar />
+      <CustomDialog open={eventModalVisible} setOpen={setEventModalVisible}>
+        <PlanDetails plan={selectedPlan} />
+      </CustomDialog>
+
       {loading ? (
         <Loading />
       ) : (
         <Calendar
           events={plansState}
           weekStartsOn={1}
+          onPressEvent={handleEventPress}
           // locale="X" // Requires import 'dayjs/locale/X'
           swipeEnabled={true}
           mode="month"

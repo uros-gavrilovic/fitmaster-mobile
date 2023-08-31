@@ -3,6 +3,9 @@ import { Appbar, Avatar, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import CustomConfirmDialog from "../modals/CustomConfirmDialog";
 import * as userActions from "../../../actions/user";
+import { AppBar } from "@react-native-material/core";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 
 export default function CustomAppBar() {
   const { user } = useSelector((state) => state.user);
@@ -15,7 +18,12 @@ export default function CustomAppBar() {
   };
 
   return (
-    <Appbar.Header>
+    <Appbar.Header
+      style={{
+        paddingLeft: 15,
+        paddingRight: 15,
+      }}
+    >
       <CustomConfirmDialog
         icon={"logout"}
         title={"Sign Out"}
@@ -23,6 +31,12 @@ export default function CustomAppBar() {
         yesAction={handleLogOut}
         open={openModal}
         setOpen={setOpenModal}
+      />
+      <FontAwesomeIcon
+        icon={faDumbbell}
+        size={20}
+        rotation={45}
+        style={{ marginRight: 10, transform: [{ rotate: "45deg" }] }}
       />
       <Appbar.Content title="FitMaster" />
       <Avatar.Text
@@ -32,7 +46,6 @@ export default function CustomAppBar() {
           setOpenModal(true);
         }}
       />
-      {/* <Appbar.Action icon="magnify" onPress={() => {}} /> */}
     </Appbar.Header>
   );
 }
