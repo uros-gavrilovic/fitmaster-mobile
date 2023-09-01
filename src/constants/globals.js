@@ -5,13 +5,20 @@ export const appInfo = {
 
 export const notificationType = {
   success: "success",
-  info: "normal",
+  info: "info",
   warning: "warning",
-  error: "danger",
+  error: "error",
 };
 
 export const sessionStorageConstants = {
   APP_NAME: "appName",
   APP_VERSION: "appVersion",
   LOCALE: "appLocale",
+};
+
+export const memberStatus = {
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+  PENDING: "PENDING",
+  BANNED: "BANNED",
 };
