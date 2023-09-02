@@ -41,9 +41,11 @@ const PlanDetails = (props) => {
     yesAction: () => {},
   });
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [statusState, setStatusState] = useState(plan.status);
 
   const handleCancel = () => {
     dispatch(memberActions.cancelPlan(plan.planID), t?.messages);
+    setStatusState(planStatus.CANCELLED);
     setMenuOpen(false);
   };
   const handleStart = () => {};
@@ -82,7 +84,7 @@ const PlanDetails = (props) => {
             right={(props) => {
               return (
                 plan.trainer &&
-                plan.status === planStatus.AWAITING && (
+                statusState === planStatus.AWAITING && (
                   <Menu
                     visible={menuOpen}
                     onDismiss={() => setMenuOpen(false)}
@@ -119,7 +121,7 @@ const PlanDetails = (props) => {
             right={() => {
               const statuses = statusComponentMap(t?.fields);
               return (
-                <View style={{ marginRight: 10 }}>{statuses[plan.status]}</View>
+                <View style={{ marginRight: 10 }}>{statuses[statusState]}</View>
               );
             }}
           />
@@ -156,7 +158,7 @@ const PlanDetails = (props) => {
             })}
           </List.Section>
         </ScrollView>
-        {plan.status === planStatus.AWAITING && (
+        {statusState === planStatus.AWAITING && (
           <Card.Actions>
             <Button
               icon="cancel"
