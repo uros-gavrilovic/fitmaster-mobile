@@ -7,6 +7,7 @@ import WorkoutBanner from "./WorkoutBanner";
 import withTranslations from "../../../utils/HighOrderComponent";
 import * as memberActions from "../../../actions/member";
 import { useIsMount } from "../../../utils/customHooks/useIsMount";
+import ChooseExerciseModal from "./ChooseExerciseModal";
 
 const Workout = (props) => {
   const { t } = props || {};
@@ -14,6 +15,7 @@ const Workout = (props) => {
   const dispatch = useDispatch();
   const isMount = useIsMount();
 
+  const [open, setOpen] = useState(false);
   const { selectedPlan } = useSelector((state) => state.member);
   const [planState, setPlanState] = useState(selectedPlan);
   const [checkboxStates, setCheckboxStates] = useState([]);
@@ -56,11 +58,16 @@ const Workout = (props) => {
 
     setCheckboxStates(updatedStates);
   };
+  const handleAddExercise = () => {
+    setOpen(true);
+  };
 
   return (
     <View>
       <CustomAppBar />
       <WorkoutBanner />
+
+      <ChooseExerciseModal open={open} setOpen={setOpen} />
 
       <ScrollView>
         <List.Section title={t?.fields?.exercises}>
@@ -123,11 +130,7 @@ const Workout = (props) => {
             </List.Accordion>
           ))}
         </List.Section>
-        <Button
-          icon="plus"
-          mode="contained"
-          onPress={() => console.log("Pressed")}
-        >
+        <Button icon="plus" mode="contained" onPress={handleAddExercise}>
           {t?.buttons?.add_exercise}
         </Button>
       </ScrollView>

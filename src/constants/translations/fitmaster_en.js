@@ -90,4 +90,17 @@ export const translation = {
       finish_workout_success: "Workout finished successfully!",
     },
   },
+
+  ExerciseTable: {
+    table: {
+      name: "Name",
+      category: "Category",
+      body_part: "Body Part",
+      select: "Select",
+    },
+    fields: {
+      of: "of",
+      rows_per_page: "Rows per page",
+    },
+  },
 };
