@@ -47,13 +47,13 @@ export const translation = {
       expired: "Expired",
     },
     buttons: {
-      cancel_workout: "Abort",
+      cancel_workout: "Cancel",
       start_workout: "Start Workout",
     },
     messages: {
-      cancel_workout_title: "Abort Workout",
+      cancel_workout_title: "Cancel Workout",
       cancel_workout_message:
-        "Are you sure you want to abort this workout? This action is irreversible.",
+        "Are you sure you want to cancel this workout? This action is irreversible.",
       cancel_workout_success: "Plan cancelled successfully!",
       remove_trainer_title: "Remove Trainer",
       remove_trainer_message:
