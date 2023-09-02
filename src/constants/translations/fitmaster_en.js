@@ -23,7 +23,11 @@ export const translation = {
     },
   },
 
-  Scheduler: {},
+  Scheduler: {
+    fields: {
+      workout: "Workout",
+    },
+  },
 
   PlanDetails: {
     fields: {
@@ -36,6 +40,11 @@ export const translation = {
       instructions: "Instructions",
       yes: "Yes",
       no: "No",
+      remove_trainer: "Remove Trainer",
+      completed: "Completed",
+      awaiting: "Awaiting",
+      cancelled: "Cancelled",
+      expired: "Expired",
     },
     buttons: {
       cancel_workout: "Abort",
@@ -43,7 +52,13 @@ export const translation = {
     },
     messages: {
       cancel_workout_title: "Abort Workout",
-      cancel_workout_message: "Are you sure you want to abort this workout?",
+      cancel_workout_message:
+        "Are you sure you want to abort this workout? This action is irreversible.",
+      cancel_workout_success: "Plan cancelled successfully!",
+      remove_trainer_title: "Remove Trainer",
+      remove_trainer_message:
+        "Are you sure you want to remove this trainer? This action is irreversible.",
+      remove_trainer_success: "Trainer removed successfully!",
     },
   },
 };

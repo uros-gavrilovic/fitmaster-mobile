@@ -16,9 +16,20 @@ export const sessionStorageConstants = {
   LOCALE: "appLocale",
 };
 
+export const userRole = {
+  MEMBER: "MEMBER",
+};
+
 export const memberStatus = {
   ACTIVE: "ACTIVE",
   INACTIVE: "INACTIVE",
   PENDING: "PENDING",
   BANNED: "BANNED",
+};
+
+export const planStatus = {
+  COMPLETED: "COMPLETED",
+  AWAITING: "AWAITING",
+  CANCELLED: "CANCELLED",
+  EXPIRED: "EXPIRED",
 };

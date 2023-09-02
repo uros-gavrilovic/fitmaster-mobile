@@ -1,12 +1,29 @@
 import withTranslations from "../../../utils/HighOrderComponent";
 import { ScrollView, Text, View } from "react-native";
-import { Avatar, Card, IconButton, List, Button } from "react-native-paper";
+import {
+  Avatar,
+  Card,
+  IconButton,
+  List,
+  Button,
+  Menu,
+  Divider,
+} from "react-native-paper";
 import {
   capitalizeFirstLetter,
   removeUnderscores,
 } from "../../../utils/utilFunctions";
 import CustomCongirmDialog from "../../reusable/modals/CustomConfirmDialog";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as memberActions from "../../../actions/member";
+import { planStatus } from "../../../constants/globals";
+import {
+  BadStatus,
+  GoodStatus,
+  NeutralStatus,
+  OkayStatus,
+} from "../../reusable/other/StatusBars";
 
 const PlanDetails = (props) => {
   const { plan, t } = props;
@@ -16,19 +33,32 @@ const PlanDetails = (props) => {
   const planStartDate = new Date(plan.startsAt);
   planStartDate.setHours(0, 0, 0, 0);
 
+  const dispatch = useDispatch();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [confirmModalState, setConfirmModalState] = useState({
+    title: "",
+    message: "",
+    yesAction: () => {},
+  });
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    dispatch(memberActions.cancelPlan(plan.planID), t?.messages);
+    setMenuOpen(false);
+  };
   const handleStart = () => {};
+  const handleRemoveTrainer = () => {
+    dispatch(memberActions.removeTrainer(plan.planID), t?.messages);
+  };
 
   return (
     <View>
       <CustomCongirmDialog
         open={confirmModalOpen}
         setOpen={setConfirmModalOpen}
-        title={t?.messages?.cancel_workout_title}
-        message={t?.messages?.cancel_workout_message}
-        yesAction={handleCancel}
+        title={confirmModalState.title}
+        message={confirmModalState.message}
+        yesAction={confirmModalState.yesAction}
       />
       <Card>
         <ScrollView>
@@ -49,15 +79,50 @@ const PlanDetails = (props) => {
                 <Avatar.Icon {...props} icon="account-circle" />
               )
             }
-            right={(props) => (
-              <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
-            )}
+            right={(props) => {
+              return (
+                plan.trainer &&
+                plan.status === planStatus.AWAITING && (
+                  <Menu
+                    visible={menuOpen}
+                    onDismiss={() => setMenuOpen(false)}
+                    anchor={
+                      <IconButton
+                        {...props}
+                        icon="dots-vertical"
+                        onPress={() => setMenuOpen(true)}
+                      />
+                    }
+                  >
+                    <Menu.Item
+                      onPress={() => {
+                        setConfirmModalState({
+                          title: t?.messages?.remove_trainer_title,
+                          message: t?.messages?.remove_trainer_message,
+                          yesAction: handleRemoveTrainer,
+                        });
+                        setMenuOpen(false);
+                        setConfirmModalOpen(true);
+                      }}
+                      leadingIcon="account-remove"
+                      title={t?.fields?.remove_trainer}
+                    />
+                  </Menu>
+                )
+              );
+            }}
           />
           <Card.Title
             title={t?.fields?.time}
             subtitle={`${getTime(plan.startsAt)} - ${getTime(plan.endsAt)}`}
             left={(props) => <Avatar.Icon {...props} icon="clock-time-four" />}
-          ></Card.Title>
+            right={() => {
+              const statuses = statusComponentMap(t?.fields);
+              return (
+                <View style={{ marginRight: 10 }}>{statuses[plan.status]}</View>
+              );
+            }}
+          />
           <List.Section>
             <List.Subheader>{`${t?.fields?.exercises}:`}</List.Subheader>
             {plan.activities.map((activity) => {
@@ -91,18 +156,30 @@ const PlanDetails = (props) => {
             })}
           </List.Section>
         </ScrollView>
-        <Card.Actions>
-          <Button icon="cancel" onPress={() => setConfirmModalOpen(true)}>
-            {t?.buttons?.cancel_workout}
-          </Button>
-          <Button
-            icon="plus-circle"
-            disabled={currentDate === planStartDate}
-            onPress={handleStart}
-          >
-            {t?.buttons?.start_workout}
-          </Button>
-        </Card.Actions>
+        {plan.status === planStatus.AWAITING && (
+          <Card.Actions>
+            <Button
+              icon="cancel"
+              onPress={() => {
+                setConfirmModalState({
+                  title: t?.messages?.cancel_workout_title,
+                  message: t?.messages?.cancel_workout_message,
+                  yesAction: handleCancel,
+                });
+                setConfirmModalOpen(true);
+              }}
+            >
+              {t?.buttons?.cancel_workout}
+            </Button>
+            <Button
+              icon="plus-circle"
+              disabled={currentDate === planStartDate}
+              onPress={handleStart}
+            >
+              {t?.buttons?.start_workout}
+            </Button>
+          </Card.Actions>
+        )}
       </Card>
     </View>
   );
@@ -114,3 +191,14 @@ const getTime = (date) => {
   date = new Date(date);
   return `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`;
 };
+
+const statusComponentMap = (t) => ({
+  [planStatus.COMPLETED]: (
+    <GoodStatus>{t?.completed?.toUpperCase()}</GoodStatus>
+  ),
+  [planStatus.CANCELLED]: <BadStatus>{t?.cancelled?.toUpperCase()}</BadStatus>,
+  [planStatus.AWAITING]: (
+    <NeutralStatus>{t?.awaiting?.toUpperCase()}</NeutralStatus>
+  ),
+  [planStatus.EXPIRED]: <OkayStatus>{t?.expired?.toUpperCase()}</OkayStatus>,
+});

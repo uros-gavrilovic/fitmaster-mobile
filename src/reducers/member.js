@@ -25,6 +25,12 @@ const memberSlice = createSlice({
       state.error = undefined;
       state.loading = false;
     },
+    removeTrainer(state, action) {
+      state.selectedPlan.trainer = undefined;
+
+      state.error = undefined;
+      state.loading = false;
+    },
 
     actionStart(state) {
       state.loading = true;

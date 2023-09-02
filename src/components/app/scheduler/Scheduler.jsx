@@ -8,8 +8,11 @@ import { useIsMount } from "../../../utils/customHooks/useIsMount";
 import Loading from "../../reusable/other/Loading";
 import CustomDialog from "../../reusable/modals/CustomDialog";
 import PlanDetails from "./PlanDetails";
+import withTranslations from "../../../utils/HighOrderComponent";
 
-export default function Scheduler() {
+export const Scheduler = (props) => {
+  const { t } = props || {};
+
   const isMount = useIsMount();
   const dispatch = useDispatch();
 
@@ -29,7 +32,7 @@ export default function Scheduler() {
     }
   }, [selectedPlan]);
 
-  if (isMount) dispatch(memberActions.fetchPlans(user?.memberID));
+  if (isMount) dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
   useEffect(() => {
     if (!isMount) {
       setPlansState(
@@ -64,12 +67,6 @@ export default function Scheduler() {
       )}
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+export default withTranslations(Scheduler);

@@ -5,7 +5,7 @@ import {
   registerMemberPath,
 } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
-import { notificationType } from "../constants/globals";
+import { notificationType, userRole } from "../constants/globals";
 import { createNotification, handleError } from "../utils/utilFunctions";
 
 export const fetchAppInfo = () => {
@@ -26,7 +26,7 @@ export const login = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
     return apiService
-      .post(loginMemberPath(), data)
+      .post(loginMemberPath(), { ...data, role: userRole.MEMBER })
       .then((response) => {
         dispatch(userActions.login(response?.data));
       })

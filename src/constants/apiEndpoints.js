@@ -1,14 +1,9 @@
 // App Information
 export const appInfoPath = () => `/app-info`;
 
-// User - Trainer
-export const loginTrainerPath = () => `/login-trainer`;
-export const registerTrainerPath = () => `/register-trainer`;
-export const logoutTrainerPath = () => `/logout-trainer`;
-
 // User - Member
-export const loginMemberPath = () => `/login-member`;
-export const registerMemberPath = () => `/register-member`;
+export const loginMemberPath = () => `/login`;
+export const registerMemberPath = () => `/register`;
 export const logoutMemberPath = () => `/logout-member`;
 
 // Members
@@ -28,6 +23,9 @@ export const plansPath = () => planAPI;
 export const plansTrainerIDPath = (id) => planAPI + `/trainer/${id}`;
 export const plansMemberIDPath = (id) => planAPI + `/member/${id}`;
 export const plansIDPath = (id) => planAPI + `/${id}`;
+export const plansRemoveTrainerByIDPath = (id) =>
+  planAPI + `/remove-trainer/${id}`;
+export const plansCancelByIDPath = (id) => planAPI + `/cancel/${id}`;
 
 // Packages
 const packageAPI = `/api/package`;

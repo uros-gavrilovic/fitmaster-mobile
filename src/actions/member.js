@@ -1,9 +1,14 @@
 import apiService from "../utils/apiService";
-import { plansMemberIDPath, plansIDPath } from "../constants/apiEndpoints";
+import {
+  plansMemberIDPath,
+  plansIDPath,
+  plansCancelByIDPath,
+  plansRemoveTrainerByIDPath,
+} from "../constants/apiEndpoints";
 import { memberActions } from "../reducers/member";
 import { formatDate, handleError } from "../utils/utilFunctions";
 
-export const fetchPlans = (memberID) => {
+export const fetchPlans = (memberID, t) => {
   return (dispatch) => {
     dispatch(memberActions.actionStart());
     return apiService
@@ -13,7 +18,7 @@ export const fetchPlans = (memberID) => {
           id: plan.planID,
           title: plan.trainer
             ? `${plan.trainer.firstName} ${plan.trainer.lastName}`
-            : "Workout",
+            : t?.workout,
           start: formatDate(plan.startsAt).toISOString(),
           end: formatDate(plan.endsAt).toISOString(),
         }));
@@ -38,6 +43,43 @@ export const fetchPlan = (planID) => {
         };
 
         dispatch(memberActions.fetchPlan(formattedData));
+      })
+      .catch((err) => {
+        handleError(err, memberActions, dispatch);
+      });
+  };
+};
+
+export const removeTrainer = (planID, msg) => {
+  return (dispatch) => {
+    dispatch(memberActions.actionStart());
+    return apiService
+      .post(plansRemoveTrainerByIDPath(planID))
+      .then(() => {
+        dispatch(memberActions.removeTrainer());
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          msg?.remove_trainer_success
+        );
+      })
+      .catch((err) => {
+        handleError(err, memberActions, dispatch);
+      });
+  };
+};
+
+export const cancelPlan = (planID, msg) => {
+  return (dispatch) => {
+    dispatch(memberActions.actionStart());
+    return apiService
+      .post(plansCancelByIDPath(planID))
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          msg?.cancel_workout_success
+        );
       })
       .catch((err) => {
         handleError(err, memberActions, dispatch);
