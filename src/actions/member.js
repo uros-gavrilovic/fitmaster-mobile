@@ -4,9 +4,12 @@ import {
   plansIDPath,
   plansCancelByIDPath,
   plansRemoveTrainerByIDPath,
+  plansPath,
+  plansUpdatePath,
 } from "../constants/apiEndpoints";
-import { memberActions } from "../reducers/member";
+import member, { memberActions } from "../reducers/member";
 import { formatDate, handleError } from "../utils/utilFunctions";
+import { planStatus } from "../constants/globals";
 
 export const fetchPlans = (memberID, t) => {
   return (dispatch) => {
@@ -50,6 +53,13 @@ export const fetchPlan = (planID) => {
   };
 };
 
+export const updatePlan = (data) => {
+  return (dispatch) => {
+    dispatch(memberActions.actionStart());
+    dispatch(memberActions.updatePlan(data));
+  };
+};
+
 export const removeTrainer = (planID, msg) => {
   return (dispatch) => {
     dispatch(memberActions.actionStart());
@@ -62,6 +72,30 @@ export const removeTrainer = (planID, msg) => {
         createNotification(
           notificationType.success,
           msg?.remove_trainer_success
+        );
+      })
+      .catch((err) => {
+        handleError(err, memberActions, dispatch);
+      });
+  };
+};
+
+export const finishWorkout = (plan, msg) => {
+  return (dispatch) => {
+    dispatch(memberActions.actionStart());
+    return apiService
+      .post(plansUpdatePath(), {
+        ...plan,
+        status: planStatus.COMPLETED,
+        completed: true,
+      })
+      .then(() => {
+        dispatch(memberActions.updatePlan(plan));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          msg?.finish_workout_success
         );
       })
       .catch((err) => {
