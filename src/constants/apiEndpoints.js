@@ -5,6 +5,7 @@ export const appInfoPath = () => `/app-info`;
 export const loginMemberPath = () => `/login`;
 export const registerMemberPath = () => `/register`;
 export const logoutMemberPath = () => `/logout-member`;
+export const changeMemberPass = () => "/change-password";
 
 // Members
 const memberAPI = `/api/member`;
