@@ -17,11 +17,19 @@ const Workout = (props) => {
 
   const [open, setOpen] = useState(false);
   const { selectedPlan } = useSelector((state) => state.member);
+  const { user } = useSelector((state) => state.user);
   const [planState, setPlanState] = useState(selectedPlan);
   const [checkboxStates, setCheckboxStates] = useState([]);
 
   useEffect(() => {
-    setPlanState(selectedPlan);
+    if (selectedPlan) {
+      console.log("imam");
+      setPlanState(selectedPlan);
+    } else {
+      console.log("nemam");
+      dispatch(memberActions.createEmptyPlan(user));
+      setPlanState(selectedPlan);
+    }
   }, [selectedPlan]);
 
   useEffect(() => {

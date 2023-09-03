@@ -111,6 +111,20 @@ export const finishWorkout = (plan, msg) => {
   };
 };
 
+export const cancelWorkout = (plan, msg) => {
+  return (dispatch) => {
+    if (plan.planID) {
+      // If plan belongs to an existing workout, set status to cancelled.
+      dispatch(memberActions.updatePlan(plan.planID, msg));
+    } else {
+      // If user created their own workout, delete it.
+      console.log("deleting");
+      dispatch(memberActions.actionStart());
+      dispatch(memberActions.cancelWorkout());
+    }
+  };
+};
+
 export const cancelPlan = (planID, msg) => {
   return (dispatch) => {
     dispatch(memberActions.actionStart());
@@ -125,5 +139,12 @@ export const cancelPlan = (planID, msg) => {
       .catch((err) => {
         handleError(err, memberActions, dispatch);
       });
+  };
+};
+
+export const createEmptyPlan = (user) => {
+  return (dispatch) => {
+    dispatch(memberActions.actionStart());
+    dispatch(memberActions.createEmptyPlan(user));
   };
 };

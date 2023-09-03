@@ -49,6 +49,25 @@ const memberSlice = createSlice({
       state.error = undefined;
       state.loading = false;
     },
+    cancelWorkout(state, action) {
+      state.selectedPlan = undefined;
+
+      state.error = undefined;
+      state.loading = false;
+    },
+    createEmptyPlan(state, action) {
+      state.selectedPlan = {
+        planID: null,
+        member: action.payload,
+        startsAt: null,
+        endsAt: null,
+        trainer: null,
+        activities: [],
+      };
+
+      state.error = undefined;
+      state.loading = false;
+    },
 
     actionStart(state) {
       state.loading = true;

@@ -24,7 +24,7 @@ const WorkoutBanner = (props) => {
   const { selectedPlan } = useSelector((state) => state.member);
 
   const handleCancelWorkout = () => {
-    console.log(selectedPlan);
+    dispatch(memberActions.cancelWorkout(selectedPlan));
   };
   const handleFinishWorkout = () => {
     dispatch(memberActions.finishWorkout(selectedPlan));
