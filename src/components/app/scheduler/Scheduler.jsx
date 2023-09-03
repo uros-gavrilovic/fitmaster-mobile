@@ -19,7 +19,6 @@ export const Scheduler = (props) => {
   const [plansState, setPlansState] = useState([]);
   const { plans, selectedPlan } = useSelector((state) => state.member);
   const { user, loading } = useSelector((state) => state.user);
-  const [selectedEventState, setSelectedEventState] = useState({});
   const [eventModalVisible, setEventModalVisible] = useState(false);
 
   const handleEventPress = (event) => {
@@ -27,22 +26,21 @@ export const Scheduler = (props) => {
   };
   useEffect(() => {
     if (selectedPlan) {
-      setSelectedEventState(selectedPlan);
       setEventModalVisible(true);
     }
   }, [selectedPlan]);
 
   if (isMount) dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
   useEffect(() => {
-    if (!isMount) {
-      setPlansState(
-        plans.map((plan) => ({
-          ...plan,
-          start: new Date(plan.start), // Convert from ISO string to Date object
-          end: new Date(plan.end), // Redux doesn't support Date objects
-        }))
-      );
-    }
+    if (isMount) return;
+
+    setPlansState(
+      plans.map((plan) => ({
+        ...plan,
+        start: new Date(plan.start), // Convert from ISO string to Date object
+        end: new Date(plan.end), // Redux doesn't support Date objects
+      }))
+    );
   }, [plans]);
 
   return (

@@ -35,12 +35,12 @@ const PlanDetails = (props) => {
 
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [confirmModalState, setConfirmModalState] = useState({
     title: "",
     message: "",
     yesAction: () => {},
   });
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [statusState, setStatusState] = useState(plan.status);
 
   const handleCancel = () => {

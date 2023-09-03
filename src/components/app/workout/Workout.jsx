@@ -21,6 +21,10 @@ const Workout = (props) => {
   const [checkboxStates, setCheckboxStates] = useState([]);
 
   useEffect(() => {
+    setPlanState(selectedPlan);
+  }, [selectedPlan]);
+
+  useEffect(() => {
     if (planState?.activities) {
       const initialStates = planState.activities.map((activity) =>
         Array(activity.sets).fill(false)

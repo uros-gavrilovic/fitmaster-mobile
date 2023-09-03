@@ -4,6 +4,7 @@ import withTranslations from "../../../utils/HighOrderComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import * as exercisesActions from "../../../actions/exercises";
+import * as memberActions from "../../../actions/member";
 
 const ExerciseTable = (props) => {
   const { t } = props || {};
@@ -15,6 +16,7 @@ const ExerciseTable = (props) => {
   );
 
   const { exercises } = useSelector((state) => state.exercises);
+  const { selectedPlan } = useSelector((state) => state.member);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,6 +35,10 @@ const ExerciseTable = (props) => {
     setPage(0);
   }, [itemsPerPage]);
 
+  const handleAddExercise = (exercise) => {
+    dispatch(memberActions.addExercise(exercise));
+  };
+
   return (
     <DataTable>
       <DataTable.Header>
@@ -43,7 +49,7 @@ const ExerciseTable = (props) => {
       </DataTable.Header>
 
       {items.slice(from, to).map((item) => (
-        <DataTable.Row key={item.key}>
+        <DataTable.Row key={item.exerciseID}>
           <DataTable.Cell>{item.name}</DataTable.Cell>
           <DataTable.Cell>
             <Chip>{item.category}</Chip>
@@ -56,7 +62,7 @@ const ExerciseTable = (props) => {
               icon="plus"
               size={20}
               mode="contained"
-              onPress={() => console.log("Pressed on", JSON.stringify(item))}
+              onPress={() => handleAddExercise(item)}
             />
           </DataTable.Cell>
         </DataTable.Row>

@@ -53,6 +53,13 @@ export const fetchPlan = (planID) => {
   };
 };
 
+export const addExercise = (exercise) => {
+  return (dispatch) => {
+    dispatch(memberActions.actionStart());
+    dispatch(memberActions.addExercise(exercise));
+  };
+};
+
 export const updatePlan = (data) => {
   return (dispatch) => {
     dispatch(memberActions.actionStart());

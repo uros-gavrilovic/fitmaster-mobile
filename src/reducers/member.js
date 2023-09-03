@@ -31,6 +31,18 @@ const memberSlice = createSlice({
       state.error = undefined;
       state.loading = false;
     },
+    addExercise(state, action) {
+      const exercise = action.payload;
+      state.selectedPlan.activities.push({
+        activityID: null,
+        exercise: exercise,
+        sets: 1,
+        comment: null,
+      });
+
+      state.error = undefined;
+      state.loading = false;
+    },
     removeTrainer(state, action) {
       state.selectedPlan.trainer = undefined;
 
