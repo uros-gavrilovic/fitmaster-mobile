@@ -59,10 +59,14 @@ const memberSlice = createSlice({
       state.selectedPlan = {
         planID: null,
         member: action.payload,
+        trainer: null,
         startsAt: null,
         endsAt: null,
+        comment: null,
         trainer: null,
         activities: [],
+        completed: null,
+        status: null,
       };
 
       state.error = undefined;

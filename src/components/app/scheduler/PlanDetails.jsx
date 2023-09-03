@@ -14,8 +14,8 @@ import {
   removeUnderscores,
 } from "../../../utils/utilFunctions";
 import CustomCongirmDialog from "../../reusable/modals/CustomConfirmDialog";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as memberActions from "../../../actions/member";
 import { planStatus } from "../../../constants/globals";
 import {
@@ -26,11 +26,13 @@ import {
 } from "../../reusable/other/StatusBars";
 
 const PlanDetails = (props) => {
-  const { plan, t } = props;
+  const { t } = props;
+
+  const { selectedPlan } = useSelector((state) => state.member);
 
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
-  const planStartDate = new Date(plan.startsAt);
+  const planStartDate = new Date(selectedPlan.startsAt);
   planStartDate.setHours(0, 0, 0, 0);
 
   const dispatch = useDispatch();
@@ -41,16 +43,16 @@ const PlanDetails = (props) => {
     message: "",
     yesAction: () => {},
   });
-  const [statusState, setStatusState] = useState(plan.status);
+  const [statusState, setStatusState] = useState(selectedPlan.status);
 
   const handleCancel = () => {
-    dispatch(memberActions.cancelPlan(plan.planID), t?.messages);
+    dispatch(memberActions.cancelPlan(selectedPlan.planID), t?.messages);
     setStatusState(planStatus.CANCELLED);
     setMenuOpen(false);
   };
   const handleStart = () => {};
   const handleRemoveTrainer = () => {
-    dispatch(memberActions.removeTrainer(plan.planID), t?.messages);
+    dispatch(memberActions.removeTrainer(selectedPlan.planID), t?.messages);
   };
 
   return (
@@ -67,15 +69,18 @@ const PlanDetails = (props) => {
           <Card.Title
             title={t?.fields?.trainer}
             subtitle={
-              plan.trainer
-                ? `${plan.trainer.firstName} ${plan.trainer.lastName}`
+              selectedPlan.trainer
+                ? `${selectedPlan.trainer.firstName} ${selectedPlan.trainer.lastName}`
                 : t?.fields?.unassigned_trainer
             }
             left={(props) =>
-              plan.trainer ? (
+              selectedPlan.trainer ? (
                 <Avatar.Text
                   {...props}
-                  label={plan.trainer.firstName[0] + plan.trainer.lastName[0]}
+                  label={
+                    selectedPlan.trainer.firstName[0] +
+                    selectedPlan.trainer.lastName[0]
+                  }
                 />
               ) : (
                 <Avatar.Icon {...props} icon="account-circle" />
@@ -83,7 +88,7 @@ const PlanDetails = (props) => {
             }
             right={(props) => {
               return (
-                plan.trainer &&
+                selectedPlan.trainer &&
                 statusState === planStatus.AWAITING && (
                   <Menu
                     visible={menuOpen}
@@ -116,7 +121,9 @@ const PlanDetails = (props) => {
           />
           <Card.Title
             title={t?.fields?.time}
-            subtitle={`${getTime(plan.startsAt)} - ${getTime(plan.endsAt)}`}
+            subtitle={`${getTime(selectedPlan.startsAt)} - ${getTime(
+              selectedPlan.endsAt
+            )}`}
             left={(props) => <Avatar.Icon {...props} icon="clock-time-four" />}
             right={() => {
               const statuses = statusComponentMap(t?.fields);
@@ -127,7 +134,7 @@ const PlanDetails = (props) => {
           />
           <List.Section>
             <List.Subheader>{`${t?.fields?.exercises}:`}</List.Subheader>
-            {plan.activities.map((activity) => {
+            {selectedPlan.activities.map((activity) => {
               let exercise = activity.exercise;
               return (
                 <View key={exercise.exerciseID}>

@@ -21,34 +21,43 @@ export const Scheduler = (props) => {
   const { user, loading } = useSelector((state) => state.user);
   const [eventModalVisible, setEventModalVisible] = useState(false);
 
+  if (isMount) dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
+
+  useEffect(() => {
+    if (!isMount) {
+      setPlansState(
+        plans.map((plan) => ({
+          ...plan,
+          start: new Date(plan.start),
+          end: new Date(plan.end),
+        }))
+      );
+    }
+  }, [plans, isMount]);
+
   const handleEventPress = (event) => {
     dispatch(memberActions.fetchPlan(event.id));
+    setEventModalVisible(true); // Open the modal when selecting a plan.
   };
-  useEffect(() => {
-    if (selectedPlan) {
-      setEventModalVisible(true);
-    }
-  }, [selectedPlan]);
 
-  if (isMount) dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
-  useEffect(() => {
-    if (isMount) return;
-
-    setPlansState(
-      plans.map((plan) => ({
-        ...plan,
-        start: new Date(plan.start), // Convert from ISO string to Date object
-        end: new Date(plan.end), // Redux doesn't support Date objects
-      }))
-    );
-  }, [plans]);
+  const handleDismiss = () => {
+    dispatch(memberActions.createEmptyPlan(user));
+    setEventModalVisible(false); // Close the modal.
+  };
 
   return (
     <View>
       <CustomAppBar />
-      <CustomDialog open={eventModalVisible} setOpen={setEventModalVisible}>
-        <PlanDetails plan={selectedPlan} />
-      </CustomDialog>
+      {eventModalVisible &&
+        selectedPlan && ( // Check if selectedPlan is defined
+          <CustomDialog
+            open={eventModalVisible}
+            setOpen={setEventModalVisible}
+            onDismiss={handleDismiss}
+          >
+            <PlanDetails />
+          </CustomDialog>
+        )}
 
       {loading ? (
         <Loading />
@@ -57,7 +66,6 @@ export const Scheduler = (props) => {
           events={plansState}
           weekStartsOn={1}
           onPressEvent={handleEventPress}
-          // locale="X" // Requires import 'dayjs/locale/X'
           swipeEnabled={true}
           mode="month"
           height={600}
