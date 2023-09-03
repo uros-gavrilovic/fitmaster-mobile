@@ -6,6 +6,7 @@ import {
   plansRemoveTrainerByIDPath,
   plansPath,
   plansUpdatePath,
+  plansCreatedByMemberPath,
 } from "../constants/apiEndpoints";
 import member, { memberActions } from "../reducers/member";
 import { formatDate, handleError } from "../utils/utilFunctions";
@@ -88,35 +89,67 @@ export const removeTrainer = (planID, msg) => {
 };
 
 export const finishWorkout = (plan, msg) => {
-  console.log("finishing");
   return (dispatch) => {
     dispatch(memberActions.actionStart());
-    return apiService
-      .post(plansUpdatePath(), {
-        ...plan,
-        status: planStatus.COMPLETED,
-        completed: true,
-        member: {
-          ...plan.member,
-          role: userRole.MEMBER,
-        },
-        trainer: {
-          ...plan.trainer,
-          role: userRole.TRAINER,
-        },
-      })
-      .then(() => {
-        dispatch(memberActions.updatePlan(plan));
-      })
-      .then(() => {
-        createNotification(
-          notificationType.success,
-          msg?.finish_workout_success
-        );
-      })
-      .catch((err) => {
-        handleError(err, memberActions, dispatch);
-      });
+
+    if (!plan.planID) {
+      console.log("OVDE BRE");
+      return apiService
+        .post(plansCreatedByMemberPath(), {
+          ...plan,
+          startsAt: new Date(),
+          endsAt: new Date(),
+          status: planStatus.COMPLETED,
+          completed: true,
+          member: {
+            ...plan.member,
+            role: userRole.MEMBER,
+          },
+          trainer: {
+            ...plan.trainer,
+            role: userRole.TRAINER,
+          },
+        })
+        .then(() => {
+          dispatch(memberActions.updatePlan(plan));
+        })
+        .then(() => {
+          createNotification(
+            notificationType.success,
+            msg?.finish_workout_success
+          );
+        })
+        .catch((err) => {
+          handleError(err, memberActions, dispatch);
+        });
+    } else {
+      return apiService
+        .post(plansUpdatePath(), {
+          ...plan,
+          status: planStatus.COMPLETED,
+          completed: true,
+          member: {
+            ...plan.member,
+            role: userRole.MEMBER,
+          },
+          trainer: {
+            ...plan.trainer,
+            role: userRole.TRAINER,
+          },
+        })
+        .then(() => {
+          dispatch(memberActions.updatePlan(plan));
+        })
+        .then(() => {
+          createNotification(
+            notificationType.success,
+            msg?.finish_workout_success
+          );
+        })
+        .catch((err) => {
+          handleError(err, memberActions, dispatch);
+        });
+    }
   };
 };
 

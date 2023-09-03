@@ -12,10 +12,6 @@ import * as memberActions from "../../../actions/member";
 const WorkoutBanner = (props) => {
   const { t, buttonDisabled } = props || {};
 
-  useEffect(() => {
-    console.log("ovamo se promenilo " + buttonDisabled);
-  }, [buttonDisabled]);
-
   const dispatch = useDispatch();
 
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
@@ -46,19 +42,19 @@ const WorkoutBanner = (props) => {
       <Banner
         visible={true}
         actions={[
+          // {
+          //   label: t?.buttons?.cancel_workout,
+          //   onPress: () => {
+          //     setConfirmModalState({
+          //       title: t?.messages?.cancel_workout_title,
+          //       message: t?.messages?.cancel_workout_message,
+          //       yesAction: handleCancelWorkout,
+          //     });
+          //     setConfirmModalOpen(true);
+          //   },
+          // },
           {
-            label: t?.buttons?.cancel_workout,
-            onPress: () => {
-              setConfirmModalState({
-                title: t?.messages?.cancel_workout_title,
-                message: t?.messages?.cancel_workout_message,
-                yesAction: handleCancelWorkout,
-              });
-              setConfirmModalOpen(true);
-            },
-          },
-          {
-            disabled: buttonDisabled,
+            // disabled: buttonDisabled,
             label: t?.buttons?.finish_workout,
             onPress: () => {
               setConfirmModalState({
