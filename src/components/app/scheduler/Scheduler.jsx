@@ -24,6 +24,10 @@ export const Scheduler = (props) => {
   if (isMount) dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
 
   useEffect(() => {
+    dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
+  }, [plans]);
+
+  useEffect(() => {
     if (!isMount) {
       setPlansState(
         plans.map((plan) => ({

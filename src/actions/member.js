@@ -112,6 +112,7 @@ export const finishWorkout = (plan, msg) => {
         })
         .then(() => {
           dispatch(memberActions.updatePlan(plan));
+          dispatch(memberActions.addPlan(plan));
         })
         .then(() => {
           createNotification(
@@ -139,6 +140,7 @@ export const finishWorkout = (plan, msg) => {
         })
         .then(() => {
           dispatch(memberActions.updatePlan(plan));
+          dispatch(memberActions.addPlan(plan));
         })
         .then(() => {
           createNotification(
