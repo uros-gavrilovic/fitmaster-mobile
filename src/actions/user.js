@@ -1,7 +1,9 @@
 import apiService from "../utils/apiService";
 import {
   appInfoPath,
+  changeMemberPass,
   loginMemberPath,
+  membersPath,
   registerMemberPath,
 } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
@@ -71,6 +73,69 @@ export const register = (data, msg) => {
         createNotification(
           notificationType.success,
           "Successfull registration"
+        );
+      })
+      .catch((err) => {
+        handleError(err, userActions, dispatch);
+      });
+  };
+};
+
+export const changeMemberPassword = (data, msg) => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    return apiService
+      .post(changeMemberPass() + `/${data.memberID}`, data)
+      .then((response) => {
+        dispatch(userActions.updateUser(response?.data));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          "Successfully changed password"
+        );
+      })
+      .catch((err) => {
+        handleError(err, userActions, dispatch);
+      });
+  };
+};
+
+export const updateMember = (data, msg) => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    return apiService
+      .put(membersPath(), { ...data, role: userRole.MEMBER })
+      .then((response) => {
+        dispatch(userActions.updateUser(response?.data));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          "Successfully updated user"
+        );
+      })
+      .catch((err) => {
+        handleError(err, userActions, dispatch);
+      });
+  };
+};
+
+export const deleteMember = (data, msg) => {
+  return (dispatch) => {
+    dispatch(userActions.actionStart());
+    return apiService
+      .delete(membersPath() + `/${data.memberID}`, {
+        ...data,
+        role: userRole.MEMBER,
+      })
+      .then((response) => {
+        dispatch(userActions.logout(response?.data));
+      })
+      .then(() => {
+        createNotification(
+          notificationType.success,
+          "Successfully deleted account"
         );
       })
       .catch((err) => {

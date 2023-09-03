@@ -63,10 +63,10 @@ const Registration = () => {
 
     dispatch(
       userActions.register({
-        firstName: formData.firstname,
-        lastName: formData.lastname,
         username: formData.username,
         password: formData.password,
+        firstName: formData.firstname,
+        lastName: formData.lastname,
       })
     );
   };
