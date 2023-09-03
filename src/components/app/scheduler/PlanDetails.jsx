@@ -26,13 +26,21 @@ import {
 } from "../../reusable/other/StatusBars";
 
 const PlanDetails = (props) => {
-  const { t } = props;
+  const { t, setOpen } = props;
+
+  const [planState, setPlanState] = useState(initialPlanState);
 
   const { selectedPlan } = useSelector((state) => state.member);
+  useEffect(() => {
+    if (selectedPlan) {
+      setPlanState(selectedPlan);
+      setStatusState(selectedPlan.status);
+    }
+  }, [selectedPlan]);
 
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
-  const planStartDate = new Date(selectedPlan.startsAt);
+  const planStartDate = new Date(planState.startsAt);
   planStartDate.setHours(0, 0, 0, 0);
 
   const dispatch = useDispatch();
@@ -43,16 +51,18 @@ const PlanDetails = (props) => {
     message: "",
     yesAction: () => {},
   });
-  const [statusState, setStatusState] = useState(selectedPlan.status);
+  const [statusState, setStatusState] = useState(planState.status);
 
   const handleCancel = () => {
-    dispatch(memberActions.cancelPlan(selectedPlan.planID), t?.messages);
+    dispatch(memberActions.cancelPlan(planState.planID), t?.messages);
     setStatusState(planStatus.CANCELLED);
     setMenuOpen(false);
   };
-  const handleStart = () => {};
+  const handleStart = () => {
+    setOpen(false);
+  };
   const handleRemoveTrainer = () => {
-    dispatch(memberActions.removeTrainer(selectedPlan.planID), t?.messages);
+    dispatch(memberActions.removeTrainer(planState.planID), t?.messages);
   };
 
   return (
@@ -69,17 +79,17 @@ const PlanDetails = (props) => {
           <Card.Title
             title={t?.fields?.trainer}
             subtitle={
-              selectedPlan.trainer
-                ? `${selectedPlan.trainer.firstName} ${selectedPlan.trainer.lastName}`
+              planState.trainer
+                ? `${planState.trainer.firstName} ${planState.trainer.lastName}`
                 : t?.fields?.unassigned_trainer
             }
             left={(props) =>
-              selectedPlan.trainer ? (
+              planState.trainer ? (
                 <Avatar.Text
                   {...props}
                   label={
-                    selectedPlan.trainer.firstName[0] +
-                    selectedPlan.trainer.lastName[0]
+                    planState.trainer.firstName[0] +
+                    planState.trainer.lastName[0]
                   }
                 />
               ) : (
@@ -88,7 +98,7 @@ const PlanDetails = (props) => {
             }
             right={(props) => {
               return (
-                selectedPlan.trainer &&
+                planState.trainer &&
                 statusState === planStatus.AWAITING && (
                   <Menu
                     visible={menuOpen}
@@ -121,8 +131,8 @@ const PlanDetails = (props) => {
           />
           <Card.Title
             title={t?.fields?.time}
-            subtitle={`${getTime(selectedPlan.startsAt)} - ${getTime(
-              selectedPlan.endsAt
+            subtitle={`${getTime(planState.startsAt)} - ${getTime(
+              planState.endsAt
             )}`}
             left={(props) => <Avatar.Icon {...props} icon="clock-time-four" />}
             right={() => {
@@ -134,7 +144,7 @@ const PlanDetails = (props) => {
           />
           <List.Section>
             <List.Subheader>{`${t?.fields?.exercises}:`}</List.Subheader>
-            {selectedPlan.activities.map((activity) => {
+            {planState.activities.map((activity) => {
               let exercise = activity.exercise;
               return (
                 <View key={exercise.exerciseID}>
@@ -211,3 +221,14 @@ const statusComponentMap = (t) => ({
   ),
   [planStatus.EXPIRED]: <OkayStatus>{t?.expired?.toUpperCase()}</OkayStatus>,
 });
+
+const initialPlanState = {
+  planID: "",
+  member: "",
+  trainer: "",
+  startsAt: "",
+  endsAt: "",
+  activities: [],
+  completed: "",
+  status: "",
+};

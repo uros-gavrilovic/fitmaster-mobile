@@ -18,6 +18,7 @@ export const sessionStorageConstants = {
 
 export const userRole = {
   MEMBER: "MEMBER",
+  TRAINER: "TRAINER",
 };
 
 export const memberStatus = {

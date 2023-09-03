@@ -9,7 +9,7 @@ import {
 } from "../constants/apiEndpoints";
 import member, { memberActions } from "../reducers/member";
 import { formatDate, handleError } from "../utils/utilFunctions";
-import { planStatus } from "../constants/globals";
+import { planStatus, userRole } from "../constants/globals";
 
 export const fetchPlans = (memberID, t) => {
   return (dispatch) => {
@@ -88,6 +88,7 @@ export const removeTrainer = (planID, msg) => {
 };
 
 export const finishWorkout = (plan, msg) => {
+  console.log("finishing");
   return (dispatch) => {
     dispatch(memberActions.actionStart());
     return apiService
@@ -95,6 +96,14 @@ export const finishWorkout = (plan, msg) => {
         ...plan,
         status: planStatus.COMPLETED,
         completed: true,
+        member: {
+          ...plan.member,
+          role: userRole.MEMBER,
+        },
+        trainer: {
+          ...plan.trainer,
+          role: userRole.TRAINER,
+        },
       })
       .then(() => {
         dispatch(memberActions.updatePlan(plan));

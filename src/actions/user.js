@@ -63,7 +63,7 @@ export const register = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
     return apiService
-      .post(registerMemberPath(), data)
+      .post(registerMemberPath(), { ...data, role: userRole.MEMBER })
       .then((response) => {
         dispatch(userActions.login(response?.data));
       })

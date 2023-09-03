@@ -23,10 +23,8 @@ const Workout = (props) => {
 
   useEffect(() => {
     if (selectedPlan) {
-      console.log("imam");
       setPlanState(selectedPlan);
     } else {
-      console.log("nemam");
       dispatch(memberActions.createEmptyPlan(user));
       setPlanState(selectedPlan);
     }

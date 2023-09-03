@@ -55,7 +55,7 @@ export const Scheduler = (props) => {
             setOpen={setEventModalVisible}
             onDismiss={handleDismiss}
           >
-            <PlanDetails />
+            <PlanDetails setOpen={setEventModalVisible} />
           </CustomDialog>
         )}
 
