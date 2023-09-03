@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import { Banner } from "react-native-paper";
 import withTranslations from "../../../utils/HighOrderComponent";
@@ -10,7 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import * as memberActions from "../../../actions/member";
 
 const WorkoutBanner = (props) => {
-  const { t } = props || {};
+  const { t, buttonDisabled } = props || {};
+
+  useEffect(() => {
+    console.log("ovamo se promenilo " + buttonDisabled);
+  }, [buttonDisabled]);
 
   const dispatch = useDispatch();
 
@@ -54,6 +58,7 @@ const WorkoutBanner = (props) => {
             },
           },
           {
+            disabled: buttonDisabled,
             label: t?.buttons?.finish_workout,
             onPress: () => {
               setConfirmModalState({
