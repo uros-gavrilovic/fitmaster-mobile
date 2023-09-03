@@ -186,7 +186,7 @@ export default function Settings() {
 
     dispatch(
       userActions.updateMember({
-        memberId: user?.memberID,
+        memberID: user?.memberID,
         firstName: formData.firstname,
         lastName: formData.lastname,
         gender: formData.gender,

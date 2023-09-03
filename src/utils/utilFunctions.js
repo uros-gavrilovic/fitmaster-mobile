@@ -71,3 +71,12 @@ export function formatISOStringDate(date) {
 
   return new Date(date).toISOString();
 }
+
+export function convertEmptyFieldsToNull(state) {
+  return Object.fromEntries(
+    Object.entries(state).map(([key, value]) => [
+      key,
+      typeof value === "string" && value.trim() === "" ? null : value,
+    ])
+  );
+}

@@ -25,7 +25,7 @@ const apiService = {
 
   put(url, body) {
     return axios
-      .put(url, body, {
+      .put(domain + url, body, {
         headers: getHeaders(),
       })
       .catch(handleErrors);
@@ -33,7 +33,7 @@ const apiService = {
 
   delete(url) {
     return axios
-      .delete(url, {
+      .delete(domain + url, {
         headers: getHeaders(),
       })
       .catch(handleErrors);

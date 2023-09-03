@@ -8,7 +8,11 @@ import {
 } from "../constants/apiEndpoints";
 import { userActions } from "../reducers/user";
 import { notificationType, userRole } from "../constants/globals";
-import { createNotification, handleError } from "../utils/utilFunctions";
+import {
+  convertEmptyFieldsToNull,
+  createNotification,
+  handleError,
+} from "../utils/utilFunctions";
 
 export const fetchAppInfo = () => {
   return (dispatch) => {
@@ -105,7 +109,10 @@ export const updateMember = (data, msg) => {
   return (dispatch) => {
     dispatch(userActions.actionStart());
     return apiService
-      .put(membersPath(), { ...data, role: userRole.MEMBER })
+      .put(
+        membersPath(),
+        convertEmptyFieldsToNull({ ...data, role: userRole.MEMBER })
+      )
       .then((response) => {
         dispatch(userActions.updateUser(response?.data));
       })
