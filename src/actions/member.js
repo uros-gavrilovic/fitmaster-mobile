@@ -9,8 +9,12 @@ import {
   plansCreatedByMemberPath,
 } from "../constants/apiEndpoints";
 import member, { memberActions } from "../reducers/member";
-import { formatDate, handleError } from "../utils/utilFunctions";
-import { planStatus, userRole } from "../constants/globals";
+import {
+  createNotification,
+  formatDate,
+  handleError,
+} from "../utils/utilFunctions";
+import { notificationType, planStatus, userRole } from "../constants/globals";
 
 export const fetchPlans = (memberID, t) => {
   return (dispatch) => {
@@ -93,7 +97,6 @@ export const finishWorkout = (plan, msg) => {
     dispatch(memberActions.actionStart());
 
     if (!plan.planID) {
-      console.log("OVDE BRE");
       return apiService
         .post(plansCreatedByMemberPath(), {
           ...plan,
@@ -113,8 +116,11 @@ export const finishWorkout = (plan, msg) => {
         .then(() => {
           dispatch(memberActions.updatePlan(plan));
           dispatch(memberActions.addPlan(plan));
+          dispatch(memberActions.createEmptyPlan(plan.member));
+          return msg;
         })
-        .then(() => {
+        .then((msg) => {
+          console.log(msg);
           createNotification(
             notificationType.success,
             msg?.finish_workout_success
@@ -141,8 +147,9 @@ export const finishWorkout = (plan, msg) => {
         .then(() => {
           dispatch(memberActions.updatePlan(plan));
           dispatch(memberActions.addPlan(plan));
+          return msg;
         })
-        .then(() => {
+        .then((msg) => {
           createNotification(
             notificationType.success,
             msg?.finish_workout_success

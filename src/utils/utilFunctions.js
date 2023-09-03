@@ -3,6 +3,7 @@ import { notificationType } from "../constants/globals";
 
 export function handleError(error, actions, dispatch) {
   // Creates notification and dispatches error action.
+  console.log(error);
 
   const messages = error.response.data;
   createNotification(notificationType.error, messages?.message);

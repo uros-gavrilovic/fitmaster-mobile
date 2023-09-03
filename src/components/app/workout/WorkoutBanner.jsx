@@ -27,7 +27,7 @@ const WorkoutBanner = (props) => {
     dispatch(memberActions.cancelWorkout(selectedPlan));
   };
   const handleFinishWorkout = () => {
-    dispatch(memberActions.finishWorkout(selectedPlan));
+    dispatch(memberActions.finishWorkout(selectedPlan, t?.messages));
   };
 
   return (

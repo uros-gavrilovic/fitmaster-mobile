@@ -81,12 +81,10 @@ export const translation = {
     },
     messages: {
       cancel_workout_title: "Cancel Workout",
-      cancel_workout_message:
-        "Are you sure you want to cancel this workout? This action is irreversible.",
+      cancel_workout_message: "Are you sure you want to cancel this workout?",
       cancel_workout_success: "Workout cancelled successfully!",
       finish_workout_title: "Finish Workout",
-      finish_workout_message:
-        "Are you sure you want to finish this workout? This action is irreversible.",
+      finish_workout_message: "Are you sure you want to finish this workout?",
       finish_workout_success: "Workout finished successfully!",
     },
   },
