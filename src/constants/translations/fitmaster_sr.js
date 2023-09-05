@@ -6,8 +6,8 @@ export const translation = {
       password: "Lozinka",
     },
     buttons: {
-      login: "Prijavi se",
-      register: "Registruj se",
+      login: "Prijavite se",
+      register: "Registrujte se",
     },
     messages: {
       login_success: "Uspešno ste se prijavili!",
@@ -18,7 +18,7 @@ export const translation = {
     tabs: {
       home: "Početna",
       scheduler: "Raspored",
-      start_workout: "Započni Trening",
+      start_workout: "Počni Trening",
       settings: "Podešavanja",
     },
   },
@@ -26,6 +26,9 @@ export const translation = {
   Home: {
     fields: {
       welcome_back: "Dobrodošli nazad",
+      active: "Aktivno",
+      almost_expired: "Skoro ističe",
+      expired: "Isteklo",
     },
   },
 
@@ -43,28 +46,28 @@ export const translation = {
       trainer: "Trener",
       sets: "setova",
       reps: "ponavljanja",
-      instructions: "Uputstva",
+      instructions: "Instrukcije",
       yes: "Da",
       no: "Ne",
       remove_trainer: "Ukloni Trenera",
       completed: "Završeno",
-      awaiting: "Očekivanje",
+      awaiting: "Čeka se",
       cancelled: "Otkazano",
       expired: "Isteklo",
     },
     buttons: {
       cancel_workout: "Otkaži",
-      start_workout: "Započni Trening",
+      start_workout: "Počni Trening",
     },
     messages: {
       cancel_workout_title: "Otkaži Trening",
       cancel_workout_message:
         "Da li ste sigurni da želite da otkažete ovaj trening? Ova akcija je nepovratna.",
-      cancel_workout_success: "Trening uspešno otkazan!",
+      cancel_workout_success: "Trening je uspešno otkazan!",
       remove_trainer_title: "Ukloni Trenera",
       remove_trainer_message:
         "Da li ste sigurni da želite da uklonite ovog trenera? Ova akcija je nepovratna.",
-      remove_trainer_success: "Trener uspešno uklonjen!",
+      remove_trainer_success: "Trener je uspešno uklonjen!",
     },
   },
 
@@ -89,11 +92,11 @@ export const translation = {
       cancel_workout_title: "Otkaži Trening",
       cancel_workout_message:
         "Da li ste sigurni da želite da otkažete ovaj trening?",
-      cancel_workout_success: "Trening uspešno otkazan!",
+      cancel_workout_success: "Trening je uspešno otkazan!",
       finish_workout_title: "Završi Trening",
       finish_workout_message:
         "Da li ste sigurni da želite da završite ovaj trening?",
-      finish_workout_success: "Trening uspešno završen!",
+      finish_workout_success: "Trening je uspešno završen!",
     },
   },
 
@@ -106,7 +109,7 @@ export const translation = {
     },
     fields: {
       of: "od",
-      rows_per_page: "Redova po stranici",
+      rows_per_page: "Redova po strani",
     },
   },
 };

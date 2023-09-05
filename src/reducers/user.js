@@ -6,7 +6,7 @@ const initialState = {
   appInfo: {
     appName: "fitmaster",
     appVersion: "1.0",
-    appLocale: "en",
+    appLocale: "sr",
   },
 
   loading: false,

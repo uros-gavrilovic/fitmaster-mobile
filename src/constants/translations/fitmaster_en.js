@@ -26,6 +26,9 @@ export const translation = {
   Home: {
     fields: {
       welcome_back: "Welcome back",
+      active: "Active",
+      almost_expired: "Almost expired",
+      expired: "Expired",
     },
   },
 
