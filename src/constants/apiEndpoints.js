@@ -13,6 +13,10 @@ export const membersPath = () => memberAPI;
 export const membersDTOPath = () => memberAPI + `/dto`;
 export const membersIDPath = (id) => memberAPI + `/${id}`;
 
+// Memberships
+const membershipAPI = `/api/membership`;
+export const membershipsIDPath = (id) => membershipAPI + `/${id}`;
+
 // Exercises
 const exerciseAPI = `/api/exercise`;
 export const exercisesDTOPath = () => exerciseAPI + `/dto`;

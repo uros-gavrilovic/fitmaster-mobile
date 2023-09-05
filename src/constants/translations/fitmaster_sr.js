@@ -3,11 +3,11 @@ export const translation = {
     title: "Prijava",
     fields: {
       username: "Korisničko ime",
-      password: "Šifra",
+      password: "Lozinka",
     },
     buttons: {
       login: "Prijavi se",
-      register: "Registracija",
+      register: "Registruj se",
     },
     messages: {
       login_success: "Uspešno ste se prijavili!",
@@ -23,6 +23,12 @@ export const translation = {
     },
   },
 
+  Home: {
+    fields: {
+      welcome_back: "Dobrodošli nazad",
+    },
+  },
+
   Scheduler: {
     fields: {
       workout: "Trening",
@@ -33,18 +39,18 @@ export const translation = {
     fields: {
       time: "Vreme",
       exercises: "Vežbe",
-      unassigned_trainer: "Nenaznačen",
+      unassigned_trainer: "Nedodeljen",
       trainer: "Trener",
-      sets: "serija",
+      sets: "setova",
       reps: "ponavljanja",
       instructions: "Uputstva",
       yes: "Da",
       no: "Ne",
       remove_trainer: "Ukloni Trenera",
-      completed: "Završen",
-      awaiting: "Čeka",
-      cancelled: "Otkazan",
-      expired: "Istekao",
+      completed: "Završeno",
+      awaiting: "Očekivanje",
+      cancelled: "Otkazano",
+      expired: "Isteklo",
     },
     buttons: {
       cancel_workout: "Otkaži",
@@ -54,11 +60,11 @@ export const translation = {
       cancel_workout_title: "Otkaži Trening",
       cancel_workout_message:
         "Da li ste sigurni da želite da otkažete ovaj trening? Ova akcija je nepovratna.",
-      cancel_workout_success: "Trening je uspešno otkazan!",
+      cancel_workout_success: "Trening uspešno otkazan!",
       remove_trainer_title: "Ukloni Trenera",
       remove_trainer_message:
         "Da li ste sigurni da želite da uklonite ovog trenera? Ova akcija je nepovratna.",
-      remove_trainer_success: "Trener je uspešno uklonjen!",
+      remove_trainer_success: "Trener uspešno uklonjen!",
     },
   },
 
@@ -83,17 +89,17 @@ export const translation = {
       cancel_workout_title: "Otkaži Trening",
       cancel_workout_message:
         "Da li ste sigurni da želite da otkažete ovaj trening?",
-      cancel_workout_success: "Trening je uspešno otkazan!",
+      cancel_workout_success: "Trening uspešno otkazan!",
       finish_workout_title: "Završi Trening",
       finish_workout_message:
         "Da li ste sigurni da želite da završite ovaj trening?",
-      finish_workout_success: "Trening je uspešno završen!",
+      finish_workout_success: "Trening uspešno završen!",
     },
   },
 
   ExerciseTable: {
     table: {
-      name: "Naziv",
+      name: "Ime",
       category: "Kategorija",
       body_part: "Deo tela",
       select: "Izaberi",

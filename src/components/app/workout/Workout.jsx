@@ -15,14 +15,15 @@ const Workout = (props) => {
   const dispatch = useDispatch();
   const isMount = useIsMount();
 
-  const [open, setOpen] = useState(false);
-  const { selectedPlan } = useSelector((state) => state.member);
-  const [finishDisabled, setFinishDisabled] = useState(true);
-  const { user } = useSelector((state) => state.user);
   const [planState, setPlanState] = useState(selectedPlan);
   const [checkboxStates, setCheckboxStates] = useState([]);
   const [kgInputs, setKgInputs] = useState([]);
   const [repsInputs, setRepsInputs] = useState([]);
+  const [accordionOpenStates, setAccordionOpenStates] = useState([]);
+  const [open, setOpen] = useState(false);
+  const { selectedPlan } = useSelector((state) => state.member);
+  const [finishDisabled, setFinishDisabled] = useState(true);
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (selectedPlan) {
@@ -49,6 +50,9 @@ const Workout = (props) => {
         return Array(activity.sets).fill("");
       });
       setRepsInputs(initialRepsInputs);
+
+      // Initialize accordion open states based on planState
+      setAccordionOpenStates(planState.activities.map(() => false));
     }
 
     if (isMount) return;
@@ -118,6 +122,7 @@ const Workout = (props) => {
       };
 
       setPlanState({ ...planState, activities: updatedActivities });
+      console.log("PlanState: ", planState);
       setCheckboxStates(updatedStates);
     }
   };
@@ -144,6 +149,13 @@ const Workout = (props) => {
     setOpen(true);
   };
 
+  // Function to toggle accordion open/close state
+  const toggleAccordion = (activityIndex) => {
+    const newOpenStates = [...accordionOpenStates];
+    newOpenStates[activityIndex] = !newOpenStates[activityIndex];
+    setAccordionOpenStates(newOpenStates);
+  };
+
   return (
     <View>
       <CustomAppBar />
@@ -155,8 +167,10 @@ const Workout = (props) => {
         <List.Section title={t?.fields?.exercises}>
           {planState?.activities?.map((activity, activityIndex) => (
             <List.Accordion
-              key={activity.activityID}
+              key={Math.random()}
               title={activity.exercise.name}
+              expanded={accordionOpenStates[activityIndex]} // Use the open state from the array
+              onPress={() => toggleAccordion(activityIndex)} // Toggle the open state
               left={(props) => (
                 <List.Icon {...props} icon={`numeric-${activityIndex + 1}`} />
               )}

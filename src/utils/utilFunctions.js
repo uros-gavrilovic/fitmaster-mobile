@@ -37,8 +37,18 @@ export function formatDate(backEndDate) {
       backEndDate[0], // Year
       backEndDate[1] - 1, // Month (0-based)
       backEndDate[2], // Day
-      backEndDate[3], // Hour
-      backEndDate[4] // Minute
+      backEndDate?.[3], // Hour
+      backEndDate?.[4] // Minute
+    )
+  );
+}
+
+export function formatDatev2(date) {
+  return new Date(
+    Date.UTC(
+      date[0], // Year
+      date[1] - 1, // Month (0-based)
+      date[2] // Day
     )
   );
 }

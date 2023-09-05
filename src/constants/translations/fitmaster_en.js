@@ -23,6 +23,12 @@ export const translation = {
     },
   },
 
+  Home: {
+    fields: {
+      welcome_back: "Welcome back",
+    },
+  },
+
   Scheduler: {
     fields: {
       workout: "Workout",
