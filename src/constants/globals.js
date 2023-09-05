@@ -1,6 +1,6 @@
 export const appInfo = {
   name: "fitmaster",
-  default_locale: "sr",
+  default_locale: "en",
 };
 
 export const notificationType = {
