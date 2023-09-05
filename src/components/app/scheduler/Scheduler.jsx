@@ -21,11 +21,9 @@ export const Scheduler = (props) => {
   const { user, loading } = useSelector((state) => state.user);
   const [eventModalVisible, setEventModalVisible] = useState(false);
 
-  if (isMount) dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
-
   useEffect(() => {
     dispatch(memberActions.fetchPlans(user?.memberID, t?.fields));
-  }, [plans]);
+  }, []);
 
   useEffect(() => {
     if (!isMount) {
